@@ -21,7 +21,7 @@ class Iron_axe(i.Item):
         self.img_down1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_axe/player_iron_axe_down1.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
         self.img_down2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_axe/player_iron_axe_down2.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
 
-    def use(self, player):
+    def use(self, player): #komenty viz iron_sword.py
         """Nastavi aktualni zbran + nastavi ze hrac utoci."""
         if not player.cur_weapon.name == self.name:
             player.cur_weapon = self

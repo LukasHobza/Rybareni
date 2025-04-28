@@ -139,12 +139,12 @@ def check_collision(entity_img, entity_pos, map_data):
     return False  
 
 def get_path(filename):
-    """Bez toho by nefungoval exe soubor."""
+    """Funkce na cestu k souboru, důležité pro EXE i normální běh."""
     if getattr(sys, 'frozen', False):
         # Program běží jako EXE
         base_path = sys._MEIPASS
     else:
         # Program běží jako normální Python skript
-        base_path = os.path.abspath(".")
+        base_path = os.path.dirname(os.path.abspath(__file__))
     
     return os.path.join(base_path, filename)

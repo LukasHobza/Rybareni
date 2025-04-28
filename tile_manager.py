@@ -2,13 +2,13 @@ import pygame, os,sys
 import config as conf
 
 def get_path(filename):
-    """Funkce na cestu k souboru dulezite pro exe soubor."""
+    """Funkce na cestu k souboru, důležité pro EXE i normální běh."""
     if getattr(sys, 'frozen', False):
         # Program běží jako EXE
         base_path = sys._MEIPASS
     else:
         # Program běží jako normální Python skript
-        base_path = os.path.abspath(".")
+        base_path = os.path.dirname(os.path.abspath(__file__))
     
     return os.path.join(base_path, filename)
 
@@ -50,7 +50,7 @@ def load_map(filename):
 for x in range(10):
     for y in range(10):
         try:
-            conf.map_data_.append(Map_data(load_map("map"+str(x)+str(y)+".txt"),x,y))
+            conf.map_data_.append(Map_data(load_map("map"+str(x)+str(y)+".txt"),x,y)) #nacte vsechny mapy ze slozky
         except:
             continue
 
@@ -61,21 +61,22 @@ def draw_tile(window,tile_id, x, y):
 
 def change_map():
     """Zmeni mapu."""
+    #vygeneruje novou mapu (cely obrazek mapy), funguje to
     for map_data in conf.map_data_:
         if map_data.x == conf.cur_map.x and map_data.y == conf.cur_map.y:
             return generate_map_surface(map_data.data), map_data.data
 
 def generate_map_surface(map_data_):
     """Vygeneruje mapu."""
-    map_surface = pygame.Surface((len(map_data_[0]) * conf.TILE_SIZE, len(map_data_) * conf.TILE_SIZE))
+    map_surface = pygame.Surface((len(map_data_[0]) * conf.TILE_SIZE, len(map_data_) * conf.TILE_SIZE)) #nove jakoby platno
     for row_idx, row in enumerate(map_data_):
         for col_idx, tile_id in enumerate(row):
-            draw_tile(map_surface, tile_id, col_idx * conf.TILE_SIZE, row_idx * conf.TILE_SIZE)
+            draw_tile(map_surface, tile_id, col_idx * conf.TILE_SIZE, row_idx * conf.TILE_SIZE) #vykresli tile na map_surface, ne na obrazovku
     return map_surface
 
 def draw_map(window):
     """Vykresli mapu."""
     window.blit(map_surface, (0, 0))
 
-conf.cur_map_data = load_map("map55.txt")
-map_surface = generate_map_surface(load_map("map55.txt"))
+conf.cur_map_data = load_map("map55.txt") #nacte zakladni mapu
+map_surface = generate_map_surface(load_map("map55.txt")) #vygeneruje 

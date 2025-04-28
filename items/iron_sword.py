@@ -22,19 +22,20 @@ class Iron_sword(i.Item):
 
     def use(self, player):
         """Nastavi aktualni zbran + nastavi ze hrac utoci."""
-        if not player.cur_weapon.name == self.name:
+        if not player.cur_weapon.name == self.name: #nastavi zbran pokud uz neni nastavena
             player.cur_weapon = self
 
         if not player.attacking:
-            player.attacking = True
-            player.can_hit = True
-            player.invincible_timer = player.invincible_timer_length/4
-            player.sprite_counter = 0
+            player.attacking = True #hrac zacne utocit
+            player.can_hit = True #hrac muze hitnout
+            player.invincible_timer = player.invincible_timer_length/4 #hrac bude nehitnutelny na malou chvilku takze nedostane damage od enemaka
+            player.sprite_counter = 0 #sprite counter reset
 
-            player.pos_before_attack = player.pos + (0,0)
+            player.pos_before_attack = player.pos + (0,0) #ulozi pozici pred utocenim
+            #aby hrac nedashoval
             if player.direction == "up":
                 player.pos.y -= conf.TILE_SIZE
             elif player.direction == "left":
                 player.pos.x -= conf.TILE_SIZE   
                 player.attack() 
-        return False
+        return False #kdyz vrati false tak se item nemaze z invu

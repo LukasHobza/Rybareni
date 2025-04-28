@@ -64,7 +64,7 @@ def draw(window):
 
 def close_shop(event):
     """Zavre okno s obchodem."""
-    if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN: #kdyz hrac zmackne escape tak zavre shop
         if event.key == pygame.K_ESCAPE:
             conf.gamemode = conf.GAMEMODE_GAME
 
