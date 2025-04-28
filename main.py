@@ -12,9 +12,9 @@ import inventory as inv
 import shop
 from items import shop_object
 
-WIDTH, HEIGHT = conf.TILE_SIZE * conf.ROWS_COLS,conf.TILE_SIZE * conf.ROWS_COLS + conf.TILE_SIZE
-WIN = pygame.display.set_mode()
-pygame.display.set_caption("RPG")
+WIDTH, HEIGHT = conf.TILE_SIZE * conf.ROWS_COLS,conf.TILE_SIZE * conf.ROWS_COLS + conf.TILE_SIZE #sirka, vyska okna
+WIN = pygame.display.set_mode() #herni okno
+pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
     """Spawnuje enemaky."""
@@ -102,8 +102,8 @@ def main():
                         entity.drop_item()
                         entities.remove(entity)
 
+    #xd jen tohle je herní smyčka :)
     while run:
-        #xd jen tohle je herní smyčka :)
         clock.tick(FPS) #aby hra nebezela ultra rychle ale jen 60fps
         start_time = time.time()
         

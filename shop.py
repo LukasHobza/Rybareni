@@ -5,7 +5,7 @@ from items import iron_axe
 
 #komentare tady dodelam nekdy
 
-pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 34) #font
+pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 34) #font, velikost fontu
 
 shop_inventory = []
 shop_inventory.append(iron_axe.Iron_axe(conf.TILE_SIZE*0, conf.TILE_SIZE*0,pygame.Vector2(5,5)))
