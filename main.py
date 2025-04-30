@@ -3,7 +3,7 @@ import player as p
 import config as conf
 import tile_manager as tilem
 from entities import slime
-from items import heal_potion
+from items import basic_fishing_rod
 from items import iron_sword
 from items import iron_axe
 import functions as fce
@@ -13,7 +13,7 @@ import shop
 from items import shop_object
 
 WIDTH, HEIGHT = conf.TILE_SIZE * conf.ROWS_COLS,conf.TILE_SIZE * conf.ROWS_COLS + conf.TILE_SIZE #sirka, vyska okna
-WIN = pygame.display.set_mode() #herni okno
+WIN = pygame.display.set_mode((0,0),pygame.FULLSCREEN) #herni okno
 pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
@@ -29,6 +29,7 @@ def spawn_enemies(entities):
 def spawn_items(items):
     """Spawnuje itemy."""
     items.append(iron_axe.Iron_axe(conf.TILE_SIZE*9, conf.TILE_SIZE*5,pygame.Vector2(5,5)))
+    items.append(basic_fishing_rod.Basic_fishing_rod(conf.TILE_SIZE*9, conf.TILE_SIZE*7,pygame.Vector2(5,5)))
     items.append(shop_object.Shop(conf.TILE_SIZE*9, conf.TILE_SIZE*15,pygame.Vector2(7,6)))
 
 def main():
@@ -88,12 +89,20 @@ def main():
             inv.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_SHOP:
             shop.draw(WIN)
+
+        """
+        night_overlay = pygame.Surface((WIDTH, HEIGHT))
+        night_overlay.set_alpha(120)  # nebo víc: 150, 180...
+        night_overlay.fill((20, 20, 60))  # Tmavě modrá
+        WIN.blit(night_overlay, (0, 0))
+        """
+
         pygame.display.update()
 
     def move():
         """Vola pohyb vsech entit vcetne hrace."""
         if conf.gamemode == conf.GAMEMODE_GAME:
-            player.move()
+            player.manager()
             for entity in entities[:]:
                 if entity.map == conf.cur_map:
                     fce.map_escape_check(entity)
@@ -115,12 +124,16 @@ def main():
                 sys.exit()
             elif event.type == pygame.MOUSEWHEEL:
                 call_mouse_event_functions(event)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DELETE:
+                    pygame.quit()
+                    sys.exit()
             call_event_functions(event)
         call_functions()
 
         end_time = time.time()
         elapsed_time = end_time - start_time
-        print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
-        #fce.show_cords(player)
+        #print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
+        #fce.show_cords(player) #vypisuje souradky hrace
 
 main()

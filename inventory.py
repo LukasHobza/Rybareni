@@ -12,7 +12,6 @@ def manager(event):
 
 def draw(window):
     """Vykresli inventar."""
-
     #vykresleni invu
     pygame.draw.rect(window,"black",inv_background,0)
     pygame.draw.rect(window,"white",inv_background,3)

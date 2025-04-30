@@ -23,11 +23,11 @@ class Iron_axe(i.Item):
 
     def use(self, player): #komenty viz iron_sword.py
         """Nastavi aktualni zbran + nastavi ze hrac utoci."""
-        if not player.cur_weapon.name == self.name:
-            player.cur_weapon = self
+        if not player.tool.name == self.name:
+            player.tool = self
 
-        if not player.attacking:
-            player.attacking = True
+        if player.mode == player.normal_mode:
+            player.mode = player.attack_mode
             player.can_hit = True
             player.invincible_timer = player.invincible_timer_length/4
             player.sprite_counter = 0

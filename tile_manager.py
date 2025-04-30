@@ -13,10 +13,11 @@ def get_path(filename):
     return os.path.join(base_path, filename)
 
 class Tile:
-    def __init__(self, image,collision):
+    def __init__(self, image,collision, water):
         self.image = image
         self.collision = collision
         self.mask = pygame.mask.from_surface(self.image)
+        self.water = water
 
 class Map_data:
     def __init__(self, data, x, y):
@@ -36,11 +37,15 @@ for i in range(71):
 tiles = []
 
 for i in range(71):
+    water = 0
+    if i >= 13 and i <= 15:
+        water = 1
+
     #prida vsechny ctverce do listu i s kolizi/bez kolize
     if i <= 19:
-        tiles.append(Tile(img_tiles[i], True))
+        tiles.append(Tile(img_tiles[i], True, water))
     else:
-        tiles.append(Tile(img_tiles[i], False))
+        tiles.append(Tile(img_tiles[i], False, water))
 
 def load_map(filename):
     """Nacte mapu ze souboru."""

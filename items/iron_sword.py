@@ -22,11 +22,11 @@ class Iron_sword(i.Item):
 
     def use(self, player):
         """Nastavi aktualni zbran + nastavi ze hrac utoci."""
-        if not player.cur_weapon.name == self.name: #nastavi zbran pokud uz neni nastavena
-            player.cur_weapon = self
+        if not player.tool.name == self.name: #nastavi zbran pokud uz neni nastavena
+            player.tool = self
 
-        if not player.attacking:
-            player.attacking = True #hrac zacne utocit
+        if player.mode == player.normal_mode:
+            player.mode = player.attack_mode #hrac zacne utocit
             player.can_hit = True #hrac muze hitnout
             player.invincible_timer = player.invincible_timer_length/4 #hrac bude nehitnutelny na malou chvilku takze nedostane damage od enemaka
             player.sprite_counter = 0 #sprite counter reset

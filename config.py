@@ -55,3 +55,8 @@ items = []
 shop_pos = 0
 shop_delay = 0
 coins = 50
+
+#rybareni
+water_lake = 1
+water_river = 2
+water_ocean = 3

@@ -22,10 +22,15 @@ class Player:
         self.sprite_counter = 0
         self.sprite_frek = 20
 
-        self.attacking = False
         self.can_hit = False
 
-        self.cur_weapon = iron_sword.Iron_sword(0,0,(5,5)) #aktualni zbran
+        #mode
+        self.normal_mode = 0
+        self.attack_mode = 1
+        self.fish_mode = 2
+        self.mode = self.normal_mode
+
+        self.tool = iron_sword.Iron_sword(0,0,(5,5)) #aktualni zbran
         
         self.img_cur = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/normal/player_down1.png")),(conf.TILE_SIZE, conf.TILE_SIZE)) #aktualni obrazek
 
@@ -52,31 +57,31 @@ class Player:
         match self.direction:
             case "left":
                 if self.sprite_counter <= self.sprite_frek/2: #nastavi jeden nebo druhy obrazek, dela animaci
-                    self.img_cur = self.cur_weapon.img_left1
+                    self.img_cur = self.tool.img_left1
                 else:
-                    self.img_cur = self.cur_weapon.img_left2
+                    self.img_cur = self.tool.img_left2
                 
             case "right": 
                 if self.sprite_counter <= self.sprite_frek/2:
-                    self.img_cur = self.cur_weapon.img_right1
+                    self.img_cur = self.tool.img_right1
                 else:
-                    self.img_cur = self.cur_weapon.img_right2
+                    self.img_cur = self.tool.img_right2
 
             case "up": 
                 if self.sprite_counter <= self.sprite_frek/2:
-                    self.img_cur = self.cur_weapon.img_up1
+                    self.img_cur = self.tool.img_up1
                 else:
-                    self.img_cur = self.cur_weapon.img_up2
+                    self.img_cur = self.tool.img_up2
 
             case "down": 
                 if self.sprite_counter <= self.sprite_frek/2:
-                    self.img_cur = self.cur_weapon.img_down1
+                    self.img_cur = self.tool.img_down1
                 else:
-                    self.img_cur = self.cur_weapon.img_down2
+                    self.img_cur = self.tool.img_down2
 
         if self.sprite_counter >= self.sprite_frek:
             self.sprite_counter = 0
-            self.attacking = False #hrac uz neutoci
+            self.mode = self.normal_mode #hrac uz neutoci
             self.can_hit = False #hrac nemuze dat hit
             self.pos = self.pos_before_attack #vrati hrace na pozici pred utocenim
 
@@ -130,7 +135,7 @@ class Player:
         """Vykresleni hrace."""
         window.blit(self.img_cur, (self.pos))
 
-    def move(self):
+    def manager(self):
         """Pohyb hrace + reseni nezranitelnosti + utoceni hrace."""
         keys = pygame.key.get_pressed()
         move = pygame.Vector2(0,0)
@@ -138,7 +143,7 @@ class Player:
         if self.invincible_timer > 0: #odecteni nezranitelnosti
             self.invincible_timer-=1
 
-        if not self.attacking: #pokud hrac neutoci, pohyb hrace
+        if self.mode == self.normal_mode: #pokud hrac neutoci, pohyb hrace
             if keys[pygame.K_a]:
                 move += pygame.Vector2(-1,0)
                 self.set_image("left")
@@ -165,5 +170,7 @@ class Player:
 
                 if not fce.check_collision(self.img_cur,new_pos, conf.cur_map_data): #kontrola jestli je nova pozice pristupna
                     self.pos = new_pos
-        else: #hrac se bud muze hybat nebo utoci
+        elif self.mode == self.attack_mode: #pokd hrac utoci
             self.attack()
+        elif self.mode == self.fish_mode:
+            pass

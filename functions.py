@@ -33,7 +33,7 @@ def use_item(event, player):
 
 def pick_up_check(player):
     """Kontrola jesli hrac sebere item."""
-    if not player.attacking: #pokud hrac neutoci
+    if player.mode == player.normal_mode: #pokud hrac neutoci
         player_mask = pygame.mask.from_surface(player.img_cur)
 
         for item in conf.items[:]:
@@ -96,7 +96,7 @@ def check_hit(player, entities):
                 if player.can_hit:
                     enemy.hp_bar_dur_cur = enemy.hp_bar_dur #bude se zobrazovat hp bar
 
-                    enemy.hp -= player.cur_weapon.damage
+                    enemy.hp -= player.tool.damage
                     if enemy.hp < 0:
                         enemy.hp = 0
 
@@ -138,6 +138,44 @@ def check_collision(entity_img, entity_pos, map_data):
                 
     return False  
 
+def check_water(player, map_data):
+    """Kontrola kolize."""
+    tile_size = conf.TILE_SIZE
+
+    new_player_pos = player.pos + pygame.Vector2(0,0)
+    match player.direction:
+        case "left":
+            new_player_pos.x -= conf.TILE_SIZE
+                
+        case "right": 
+            new_player_pos.x += conf.TILE_SIZE
+
+        case "up": 
+            new_player_pos.y -= conf.TILE_SIZE
+
+        case "down": 
+            new_player_pos.y += conf.TILE_SIZE
+
+    entity_rect = pygame.Rect(new_player_pos.x +10, new_player_pos.y +10, tile_size -20, tile_size -20)
+    try:
+        # Přepočet souřadnic entity na indexy v mapě
+        start_col = max(0, int(new_player_pos.x // tile_size) - 1)
+        end_col = min(len(map_data[0]), int(new_player_pos.x // tile_size) + 2)
+        start_row = max(0, int(new_player_pos.y // tile_size) - 1)
+        end_row = min(len(map_data), int(new_player_pos.y // tile_size) + 2)
+
+        for row_idx in range(start_row, end_row):
+            for col_idx in range(start_col, end_col):
+                tile_id = map_data[row_idx][col_idx]
+                tile = tilem.tiles[tile_id]
+
+                tile_rect = pygame.Rect(col_idx * tile_size, row_idx * tile_size, tile_size, tile_size)
+                if entity_rect.colliderect(tile_rect):
+                    return tile.water
+                    
+    except:
+        return 0
+                
 def get_path(filename):
     """Funkce na cestu k souboru, důležité pro EXE i normální běh."""
     if getattr(sys, 'frozen', False):
