@@ -1,3 +1,5 @@
+from pathfinding.core.grid import Grid
+from pathfinding.finder.a_star import AStarFinder
 import pygame,sys,os
 import tile_manager as tilem
 import config as conf
@@ -139,21 +141,17 @@ def check_collision(entity_pos, map_data):
     return False  
 
 def alternative_move(entity, move):
-    new_pos = entity.pos + (0,0)
     if move.x < 0:
-        if not check_collision(pygame.Vector2(new_pos.x-entity.vel,new_pos.y),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x-entity.vel,entity.pos.y),conf.cur_map_data):
             return "left"
-    new_pos = entity.pos + (0,0)
     if move.x > 0:
-        if not check_collision(pygame.Vector2(new_pos.x+entity.vel,new_pos.y),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x+entity.vel,entity.pos.y),conf.cur_map_data):
             return "right"
-    new_pos = entity.pos + (0,0)
     if move.y < 0:
-        if not check_collision(pygame.Vector2(new_pos.x,new_pos.y-entity.vel),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y-entity.vel),conf.cur_map_data):
             return "up"
-    new_pos = entity.pos + (0,0)
     if move.y > 0:
-        if not check_collision(pygame.Vector2(new_pos.x,new_pos.y+entity.vel),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y+entity.vel),conf.cur_map_data):
             return "down"
     return "none"
 
@@ -194,7 +192,7 @@ def check_water(player, map_data):
                     
     except:
         return 0
-                
+
 def get_path(filename):
     """Funkce na cestu k souboru, důležité pro EXE i normální běh."""
     if getattr(sys, 'frozen', False):
@@ -205,3 +203,8 @@ def get_path(filename):
         base_path = os.path.dirname(os.path.abspath(__file__))
     
     return os.path.join(base_path, filename)
+
+def create_grid(map_data):
+    """Vytvoří grid pro pathfinding."""
+    grid = Grid(matrix=[[0 if tile <= 19 else 1 for tile in row] for row in map_data])
+    return grid

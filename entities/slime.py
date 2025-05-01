@@ -17,16 +17,6 @@ class Slime(e.Entity):
 
         self.img_cur = self.img_1
 
-    def set_image(self):
-        """Nastavi obrazek pro slima."""
-        if self.sprite_counter <= self.sprite_frek/2:
-            self.img_cur = self.img_1
-        else:
-            self.img_cur = self.img_2
-
-        if self.sprite_counter >= self.sprite_frek:
-            self.sprite_counter = 0
-
     def drop_item(self):
         """Slime dropne rnd item kdyz umre."""
         conf.items.append(random.choice([heal_potion.Heal_otion(self.pos.x,self.pos.y,self.map),bronze_coin.Bronze_coin(self.pos.x,self.pos.y,self.map)]))

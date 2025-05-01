@@ -18,13 +18,7 @@ pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
     """Spawnuje enemaky."""
-    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 11,conf.TILE_SIZE* 12,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 7 ,conf.TILE_SIZE* 8 ,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 12,conf.TILE_SIZE* 7 ,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 6 ,conf.TILE_SIZE* 7 ,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 6 ,pygame.Vector2(4,5)))
-    entities.append(slime.Slime(conf.TILE_SIZE* 7 ,conf.TILE_SIZE* 11,pygame.Vector2(4,5)))
+    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
 
 def spawn_items(items):
     """Spawnuje itemy."""
@@ -82,6 +76,7 @@ def main():
             for entity in entities: #projede vsechny entity
                 if entity.map == conf.cur_map: #kresli jen ty na aktualni mape
                     entity.draw(WIN)
+                    entity.draw_debug_path(WIN)
                     entity.draw_hp_bar(WIN)
 
             player.draw(WIN)
@@ -130,10 +125,9 @@ def main():
                     sys.exit()
             call_event_functions(event)
         call_functions()
-
         end_time = time.time()
         elapsed_time = end_time - start_time
-        print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
+        #print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
         #fce.show_cords(player) #vypisuje souradky hrace
 
 main()
