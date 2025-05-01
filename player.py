@@ -168,8 +168,19 @@ class Player:
 
                 new_pos = self.pos + move
 
-                if not fce.check_collision(self.img_cur,new_pos, conf.cur_map_data): #kontrola jestli je nova pozice pristupna
+                if not fce.check_collision(new_pos, conf.cur_map_data): #kontrola jestli je nova pozice pristupna
                     self.pos = new_pos
+                else:
+                    match fce.alternative_move(self,move):
+                        case "left":
+                            self.pos.x -= self.vel
+                        case "right":
+                            self.pos.x += self.vel
+                        case "up":
+                            self.pos.y -= self.vel
+                        case "down":
+                            self.pos.y += self.vel
+
         elif self.mode == self.attack_mode: #pokd hrac utoci
             self.attack()
         elif self.mode == self.fish_mode:

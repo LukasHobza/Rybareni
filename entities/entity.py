@@ -25,10 +25,11 @@ class Entity:
         """Vykresli danou entitu."""
         window.blit(self.img_cur, (self.pos))
 
-    def move(self):
+    def move(self, player):
         """Pohyb entity."""
-        move = pygame.Vector2(0,0)
+        move = player.pos - self.pos
 
+        """rnd pohyb
         if self.move_interval >= self.move_frek:
             self.move_interval = 0
             self.direction = random.choice(["left", "right", "up", "down", "stop"])
@@ -48,7 +49,8 @@ class Entity:
         if self.direction == "down":
             move += pygame.Vector2(0,1)
             self.set_image()
-
+        """
+        
         if move != pygame.Vector2(0,0): 
             self.sprite_counter += 1
             move = move.normalize()
@@ -56,8 +58,18 @@ class Entity:
 
             new_pos = self.pos + move
 
-            if not fce.check_collision(self.img_cur,new_pos, conf.cur_map_data):
+            if not fce.check_collision(new_pos, conf.cur_map_data):
                 self.pos = new_pos
+            else:
+                match fce.alternative_move(self,move):
+                    case "left":
+                        self.pos.x -= self.vel
+                    case "right":
+                        self.pos.x += self.vel
+                    case "up":
+                        self.pos.y -= self.vel
+                    case "down":
+                        self.pos.y += self.vel
 
     def draw_hp_bar(self, window):
         """Pokud je potreba vykresli hp bar."""

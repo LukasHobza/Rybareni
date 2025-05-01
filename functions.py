@@ -108,7 +108,7 @@ def check_hit(player, entities):
 
     return False  # Žádná kolize
 
-def check_collision(entity_img, entity_pos, map_data):
+def check_collision(entity_pos, map_data):
     """Kontrola kolize."""
     #entity_mask = pygame.mask.from_surface(entity_img)
     tile_size = conf.TILE_SIZE  
@@ -137,6 +137,25 @@ def check_collision(entity_img, entity_pos, map_data):
                     return True
                 
     return False  
+
+def alternative_move(entity, move):
+    new_pos = entity.pos + (0,0)
+    if move.x < 0:
+        if not check_collision(pygame.Vector2(new_pos.x-entity.vel,new_pos.y),conf.cur_map_data):
+            return "left"
+    new_pos = entity.pos + (0,0)
+    if move.x > 0:
+        if not check_collision(pygame.Vector2(new_pos.x+entity.vel,new_pos.y),conf.cur_map_data):
+            return "right"
+    new_pos = entity.pos + (0,0)
+    if move.y < 0:
+        if not check_collision(pygame.Vector2(new_pos.x,new_pos.y-entity.vel),conf.cur_map_data):
+            return "up"
+    new_pos = entity.pos + (0,0)
+    if move.y > 0:
+        if not check_collision(pygame.Vector2(new_pos.x,new_pos.y+entity.vel),conf.cur_map_data):
+            return "down"
+    return "none"
 
 def check_water(player, map_data):
     """Kontrola kolize."""

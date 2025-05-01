@@ -106,7 +106,7 @@ def main():
             for entity in entities[:]:
                 if entity.map == conf.cur_map:
                     fce.map_escape_check(entity)
-                    entity.move()
+                    entity.move(player)
                     if entity.hp <= 0:
                         entity.drop_item()
                         entities.remove(entity)
@@ -133,7 +133,7 @@ def main():
 
         end_time = time.time()
         elapsed_time = end_time - start_time
-        #print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
+        print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
         #fce.show_cords(player) #vypisuje souradky hrace
 
 main()
