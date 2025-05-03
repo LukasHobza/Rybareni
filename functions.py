@@ -208,3 +208,11 @@ def create_grid(map_data):
     """Vytvoří grid pro pathfinding."""
     grid = Grid(matrix=[[0 if tile <= 19 else 1 for tile in row] for row in map_data])
     return grid
+
+def debug(event):
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_F1:
+            if conf.debug:
+                conf.debug = False
+            else:
+                conf.debug = True

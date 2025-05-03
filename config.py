@@ -35,6 +35,8 @@ offset_y = (screen_height - map_pixel_height) // 2
 
 #CONFIG
 ROWS_COLS = 19
+items = []
+debug = False
 
 #gamemody
 gamemode = 0
@@ -49,7 +51,6 @@ cur_map_data = []
 #veci pro inventar
 inv_pos = 0
 inventory = []
-items = []
 
 #veci pro obchod
 shop_pos = 0

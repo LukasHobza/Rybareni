@@ -55,6 +55,7 @@ def main():
         if conf.gamemode == conf.GAMEMODE_GAME:
             fce.drop_item(event,player)
             fce.use_item(event,player)
+        fce.debug(event)
 
     def call_functions():
         """Vola fce."""
@@ -76,8 +77,9 @@ def main():
             for entity in entities: #projede vsechny entity
                 if entity.map == conf.cur_map: #kresli jen ty na aktualni mape
                     entity.draw(WIN)
-                    entity.draw_debug_path(WIN)
                     entity.draw_hp_bar(WIN)
+                    if conf.debug:
+                        entity.draw_debug_path(WIN)
 
             player.draw(WIN)
             ui.draw(WIN,player.hp,player.max_hp)
