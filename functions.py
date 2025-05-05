@@ -216,3 +216,4 @@ def debug(event):
                 conf.debug = False
             else:
                 conf.debug = True
+

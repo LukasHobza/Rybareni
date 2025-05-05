@@ -11,6 +11,7 @@ import ui
 import inventory as inv
 import shop
 from items import shop_object
+import fish_minigame
 
 WIDTH, HEIGHT = conf.TILE_SIZE * conf.ROWS_COLS,conf.TILE_SIZE * conf.ROWS_COLS + conf.TILE_SIZE #sirka, vyska okna
 WIN = pygame.display.set_mode((0,0),pygame.FULLSCREEN) #herni okno
@@ -64,10 +65,12 @@ def main():
             fce.pick_up_check(player)
             fce.map_escape_check(player)
             fce.check_hit(player, entities)
+        if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
+            fish_minigame.manager()
 
     def redraw_window():
         """Prekresluje herni okno."""
-        if conf.gamemode == conf.GAMEMODE_GAME or conf.gamemode == conf.GAMEMODE_SHOP:
+        if conf.gamemode == conf.GAMEMODE_GAME or conf.gamemode == conf.GAMEMODE_SHOP or conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
             tilem.draw_map(WIN)
 
             for item in conf.items: #projede vsechny itemy
@@ -86,6 +89,8 @@ def main():
             inv.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_SHOP:
             shop.draw(WIN)
+        if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
+            fish_minigame.draw(WIN)
 
         """
         night_overlay = pygame.Surface((WIDTH, HEIGHT))

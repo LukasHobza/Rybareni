@@ -39,9 +39,10 @@ items = []
 debug = False
 
 #gamemody
-gamemode = 0
+gamemode = 2
 GAMEMODE_GAME = 0
 GAMEMODE_SHOP = 1
+GAMEMODE_FISH_MINIGAME = 2
 
 #veci pro mapu
 map_data_ = []
