@@ -39,7 +39,7 @@ items = []
 debug = False
 
 #gamemody
-gamemode = 2
+gamemode = 0
 GAMEMODE_GAME = 0
 GAMEMODE_SHOP = 1
 GAMEMODE_FISH_MINIGAME = 2

@@ -31,7 +31,7 @@ class Iron_sword(i.Item):
             player.invincible_timer = player.invincible_timer_length/4 #hrac bude nehitnutelny na malou chvilku takze nedostane damage od enemaka
             player.sprite_counter = 0 #sprite counter reset
 
-            player.pos_before_attack = player.pos + (0,0) #ulozi pozici pred utocenim
+            player.pos_before_event = player.pos + (0,0) #ulozi pozici pred utocenim
             #aby hrac nedashoval
             if player.direction == "up":
                 player.pos.y -= conf.TILE_SIZE

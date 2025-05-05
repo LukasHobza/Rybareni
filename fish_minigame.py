@@ -1,5 +1,4 @@
 import pygame, random
-import functions as fce
 import config as conf
 
 min_y = conf.TILE_SIZE*12
@@ -29,8 +28,10 @@ fish_height = conf.TILE_SIZE/2
 fish_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - fish_height)
 
 def reset(difficulty):
+    global paddle_speed,paddle_speed_cur,paddle_speed_max,paddle_height,paddle_pos,progress_bar
+    progress_bar = 20
+
     #zeleny obdelnik
-    global paddle_speed,paddle_speed_cur,paddle_speed_max,paddle_height,paddle_pos
     paddle_speed = 1
     paddle_speed_cur = 0
     paddle_speed_max = 5
@@ -58,26 +59,26 @@ def reset(difficulty):
             fish_speed_max = 6
 
 def draw(display):
-    pygame.draw.rect(display, (20,255,20), [paddle_pos.x, paddle_pos.y, paddle_width, paddle_height], 0)
-    pygame.draw.rect(display, (20,20,255), [fish_pos.x, fish_pos.y, fish_width, fish_height], 0)
-    pygame.draw.rect(display, (255-progress_bar,progress_bar,0), [conf.TILE_SIZE*12,conf.TILE_SIZE*12-(progress_heihgt*(progress_bar/255)), progress_width, (progress_heihgt*(progress_bar/255))], 0)
+    pygame.draw.rect(display, (20,255,20), [paddle_pos.x, paddle_pos.y, paddle_width, paddle_height], 0)#vykresli zelenyobdelnik
+    pygame.draw.rect(display, (20,20,255), [fish_pos.x, fish_pos.y, fish_width, fish_height], 0)#vykresli rybicku
+    pygame.draw.rect(display, (255-progress_bar,progress_bar,0), [conf.TILE_SIZE*12,conf.TILE_SIZE*12-(progress_heihgt*(progress_bar/255)), progress_width, (progress_heihgt*(progress_bar/255))], 0)#vykresli progress bar
 
 def manager():
     #zeleny obdelnik
     global paddle_speed_cur, fish_speed_cur,progress_bar
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
-        if paddle_speed_cur < paddle_speed_max:
-            paddle_speed_cur+= paddle_speed
+    keys = pygame.key.get_pressed()#ziska zmacknute klavesy
+    if keys[pygame.K_SPACE]:#kdyz hrac drzi mezernik
+        if paddle_speed_cur < paddle_speed_max:#pokud rychlost zel ob neni maximalni
+            paddle_speed_cur+= paddle_speed#zvyseni aktualni rychlosti
     else:
         if paddle_speed_cur > -paddle_speed_max:
             paddle_speed_cur -= paddle_speed
 
-    if paddle_speed_cur > 0:
-        if paddle_pos.y > max_y:
-            paddle_pos.y -= paddle_speed_cur
+    if paddle_speed_cur > 0:#pokud je aktualni rychlost kladna
+        if paddle_pos.y > max_y:#pokud aktualni vyska neni maximalni
+            paddle_pos.y -= paddle_speed_cur#zel ob se posune nahoru
         else:
-            paddle_pos.y = max_y
+            paddle_pos.y = max_y#jinak se jeho vyska nastavi na max
     else:
         if paddle_pos.y+paddle_height < min_y:
             paddle_pos.y -= paddle_speed_cur
@@ -85,8 +86,8 @@ def manager():
             paddle_pos.y = min_y-paddle_height
 
     #rybicka nahodny pohyb
-    if fish_pos.y > max_y+((min_y-max_y)/2):
-        if random.randint(0,100) <= 57:
+    if fish_pos.y > max_y+((min_y-max_y)/2):#pokud je ryba v dolni polovine "baru", asi stejne je to jedno
+        if random.randint(0,100) <= 57:#je vetsi sance ze ryba pujde nahoru
             if fish_speed_cur < fish_speed_max:
                 fish_speed_cur += fish_speed
         else:
@@ -115,10 +116,15 @@ def manager():
 
     zeleny_obdelnik = pygame.Rect(paddle_pos.x, paddle_pos.y, paddle_width, paddle_height)
     rybicka = pygame.Rect(fish_pos.x, fish_pos.y, fish_width, fish_height)
-    if zeleny_obdelnik.colliderect(rybicka) and progress_bar+2 <= 255:
-        progress_bar+=1
-    elif progress_bar > 0:
+    if zeleny_obdelnik.colliderect(rybicka) and progress_bar+0.8 <= 255:
+        progress_bar+=0.8
+    elif progress_bar-1 >= 0:
         progress_bar-=1
-    print(progress_bar)
 
-reset("hard")
+    if progress_bar >= 250:#kdyz hrac chytne rybu
+        conf.gamemode = conf.GAMEMODE_GAME
+    elif progress_bar == 0:#kdyz hrac nechytne rybu
+        conf.gamemode = conf.GAMEMODE_GAME
+
+    if keys[pygame.K_ESCAPE]:#hrac muze zmackout esc a ukoncit rybareni
+        conf.gamemode = conf.GAMEMODE_GAME

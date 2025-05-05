@@ -32,7 +32,7 @@ class Iron_axe(i.Item):
             player.invincible_timer = player.invincible_timer_length/4
             player.sprite_counter = 0
 
-            player.pos_before_attack = player.pos + (0,0)
+            player.pos_before_event = player.pos + (0,0)
             if player.direction == "up":
                 player.pos.y -= conf.TILE_SIZE
             elif player.direction == "left":

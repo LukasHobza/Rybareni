@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, random
 import config as conf
 import functions as fce
 
@@ -8,7 +8,7 @@ class Player:
     def __init__(self, x,y, vel,hp=100):
         self.name = "player"
         self.pos = pygame.Vector2(x,y)
-        self.pos_before_attack = pygame.Vector2(x,y)
+        self.pos_before_event = pygame.Vector2(x,y)
         self.hp = hp
         self.max_hp = hp
         self.vel = vel
@@ -42,15 +42,55 @@ class Player:
         self.img_up2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/normal/player_up2.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
         self.img_down1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/normal/player_down1.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
         self.img_down2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/normal/player_down2.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
-    
-        self.img_attack_left1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_left1.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_attack_left2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_left2.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_attack_right1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_right1.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_attack_right2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_right2.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_attack_up1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_up1.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_attack_up2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_up2.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_attack_down1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_down1.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_attack_down2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/iron_sword/player_iron_sword_down2.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
+
+    def fishing(self):
+        """Rabareni pro hrace."""
+        match self.direction:
+            case "left":
+                if self.sprite_counter <= self.sprite_frek/2: #nastavi jeden nebo druhy obrazek, dela animaci
+                    self.img_cur = self.tool.img_left1
+                else:
+                    self.img_cur = self.tool.img_left2
+                
+            case "right": 
+                if self.sprite_counter <= self.sprite_frek/2:
+                    self.img_cur = self.tool.img_right1
+                else:
+                    self.img_cur = self.tool.img_right2
+
+            case "up": 
+                if self.sprite_counter <= self.sprite_frek/2:
+                    self.img_cur = self.tool.img_up1
+                else:
+                    self.img_cur = self.tool.img_up2
+
+            case "down": 
+                if self.sprite_counter <= self.sprite_frek/2:
+                    self.img_cur = self.tool.img_down1
+                else:
+                    self.img_cur = self.tool.img_down2
+
+        if random.randint(0,100) <= 1:
+            self.sprite_counter = 0
+            self.mode = self.normal_mode #hrac uz nerybari
+            self.pos = self.pos_before_event #vrati hrace na pozici pred rybarenim, attack lepe prejmenovat na neco jineho napr event
+
+            match self.direction: #nastavi normalni obrazek hrace, uz ne s prutem
+                case "left": 
+                    self.img_cur = self.img_left1
+                    
+                case "right": 
+                    self.img_cur = self.img_right1
+
+                case "up": 
+                    self.img_cur = self.img_up1
+
+                case "down": 
+                    self.img_cur = self.img_down1
+            conf.gamemode = conf.GAMEMODE_FISH_MINIGAME
+        
+        if self.sprite_counter < self.sprite_frek:
+            self.sprite_counter+=1
 
     def attack(self):
         """Utoceni pro hrace."""
@@ -83,7 +123,7 @@ class Player:
             self.sprite_counter = 0
             self.mode = self.normal_mode #hrac uz neutoci
             self.can_hit = False #hrac nemuze dat hit
-            self.pos = self.pos_before_attack #vrati hrace na pozici pred utocenim
+            self.pos = self.pos_before_event #vrati hrace na pozici pred utocenim
 
             match self.direction: #nastavi normalni obrazek hrace, uz ne se zbrani
                 case "left": 
@@ -184,4 +224,4 @@ class Player:
         elif self.mode == self.attack_mode: #pokd hrac utoci
             self.attack()
         elif self.mode == self.fish_mode:
-            pass
+            self.fishing()
