@@ -56,33 +56,41 @@ def pick_up_check(player):
 def map_escape_check(entity):
     """Kontrola jestli entita odesla z mapy."""
     if entity.pos.x <= conf.TILE_SIZE/2: #pokud hrac odesel vlevo z mapy
-        entity.pos.x = conf.TILE_SIZE*(conf.ROWS_COLS-2) #prenastavi se pozice hrace na pravou stranu
         if entity.name == "player": #pokud je to hrac
-            conf.cur_map.x -= 1  #zmeni se aktualni mapa
-            tilem.map_surface, conf.cur_map_data = tilem.change_map() #vygeneruje se nova mapa(velky obrazek), a ziskaji se nova map data
+            if entity.mode == entity.normal_mode:
+                conf.cur_map.x -= 1  #zmeni se aktualni mapa
+                entity.pos.x = conf.TILE_SIZE*(conf.ROWS_COLS-2) #prenastavi se pozice hrace na pravou stranu
+                tilem.map_surface, conf.cur_map_data = tilem.change_map() #vygeneruje se nova mapa(velky obrazek), a ziskaji se nova map data
         else:
             entity.map.x -= 1
+            entity.pos.x = conf.TILE_SIZE*(conf.ROWS_COLS-2) #prenastavi se pozice entity na pravou stranu
     elif entity.pos.x >= conf.TILE_SIZE*(conf.ROWS_COLS-2)+conf.TILE_SIZE/2:
-        entity.pos.x = conf.TILE_SIZE
         if entity.name == "player":
-            conf.cur_map.x += 1
-            tilem.map_surface, conf.cur_map_data = tilem.change_map()
+            if entity.mode == entity.normal_mode:
+                conf.cur_map.x += 1
+                entity.pos.x = conf.TILE_SIZE
+                tilem.map_surface, conf.cur_map_data = tilem.change_map()
         else:
             entity.map.x += 1
+            entity.pos.x = conf.TILE_SIZE
     if entity.pos.y <= conf.TILE_SIZE/2:
-        entity.pos.y = conf.TILE_SIZE*(conf.ROWS_COLS-2)
         if entity.name == "player":
-            conf.cur_map.y -= 1
-            tilem.map_surface, conf.cur_map_data = tilem.change_map()
+            if entity.mode == entity.normal_mode:
+                conf.cur_map.y -= 1
+                entity.pos.y = conf.TILE_SIZE*(conf.ROWS_COLS-2)
+                tilem.map_surface, conf.cur_map_data = tilem.change_map()
         else:
             entity.map.y -= 1
+            entity.pos.y = conf.TILE_SIZE*(conf.ROWS_COLS-2)
     elif entity.pos.y >= conf.TILE_SIZE*(conf.ROWS_COLS-2)+conf.TILE_SIZE/2:
-        entity.pos.y = conf.TILE_SIZE
         if entity.name == "player":
-            conf.cur_map.y += 1
-            tilem.map_surface, conf.cur_map_data = tilem.change_map()
+            if entity.mode == entity.normal_mode:
+                conf.cur_map.y += 1
+                entity.pos.y = conf.TILE_SIZE
+                tilem.map_surface, conf.cur_map_data = tilem.change_map()
         else:
             entity.map.y += 1
+            entity.pos.y = conf.TILE_SIZE
 
 
 def check_hit(player, entities):
