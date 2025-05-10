@@ -16,8 +16,11 @@ scale_factor = get_scaling_factor()
 
 pygame.init()
 
-MAP_WIDTH_IN_TILES = 19
-MAP_HEIGHT_IN_TILES = 20
+ROWS = 19
+COLS = 19 #max 35 vic ne
+
+MAP_WIDTH_IN_TILES = COLS+0
+MAP_HEIGHT_IN_TILES = ROWS+1 #+1 kvuli inventari dole
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen_width, screen_height = screen.get_size()
@@ -34,7 +37,6 @@ offset_x = (screen_width - map_pixel_width) // 2
 offset_y = (screen_height - map_pixel_height) // 2
 
 #CONFIG
-ROWS_COLS = 19
 items = []
 debug = False
 

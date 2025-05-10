@@ -1,5 +1,9 @@
 import pygame, random
 import config as conf
+import functions as fce
+
+background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
+background = pygame.Rect (conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
 
 min_y = conf.TILE_SIZE*12
 max_y = conf.TILE_SIZE*4
@@ -59,6 +63,11 @@ def reset(difficulty):
             fish_speed_max = 6
 
 def draw(display):
+    fce.draw_transparent_rect(display,(145,255,255),background_,128,10)
+    pygame.draw.rect(display,"black",background,3,10)
+    pygame.draw.rect(display, (150,150,150), [conf.TILE_SIZE*12, conf.TILE_SIZE*4, conf.TILE_SIZE/2, conf.TILE_SIZE*8], 0)
+    pygame.draw.rect(display, (150,150,150), [conf.TILE_SIZE*14, conf.TILE_SIZE*4, conf.TILE_SIZE/2, conf.TILE_SIZE*8], 0)
+
     pygame.draw.rect(display, (20,255,20), [paddle_pos.x, paddle_pos.y, paddle_width, paddle_height], 0)#vykresli zelenyobdelnik
     pygame.draw.rect(display, (20,20,255), [fish_pos.x, fish_pos.y, fish_width, fish_height], 0)#vykresli rybicku
     pygame.draw.rect(display, (255-progress_bar,progress_bar,0), [conf.TILE_SIZE*12,conf.TILE_SIZE*12-(progress_heihgt*(progress_bar/255)), progress_width, (progress_heihgt*(progress_bar/255))], 0)#vykresli progress bar
@@ -123,7 +132,7 @@ def manager():
 
     if progress_bar >= 250:#kdyz hrac chytne rybu
         conf.gamemode = conf.GAMEMODE_GAME
-    elif progress_bar == 0:#kdyz hrac nechytne rybu
+    elif progress_bar <= 2:#kdyz hrac nechytne rybu
         conf.gamemode = conf.GAMEMODE_GAME
 
     if keys[pygame.K_ESCAPE]:#hrac muze zmackout esc a ukoncit rybareni

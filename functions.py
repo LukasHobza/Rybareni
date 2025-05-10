@@ -59,12 +59,12 @@ def map_escape_check(entity):
         if entity.name == "player": #pokud je to hrac
             if entity.mode == entity.normal_mode:
                 conf.cur_map.x -= 1  #zmeni se aktualni mapa
-                entity.pos.x = conf.TILE_SIZE*(conf.ROWS_COLS-2) #prenastavi se pozice hrace na pravou stranu
+                entity.pos.x = conf.TILE_SIZE*(conf.COLS-2) #prenastavi se pozice hrace na pravou stranu
                 tilem.map_surface, conf.cur_map_data = tilem.change_map() #vygeneruje se nova mapa(velky obrazek), a ziskaji se nova map data
         else:
             entity.map.x -= 1
-            entity.pos.x = conf.TILE_SIZE*(conf.ROWS_COLS-2) #prenastavi se pozice entity na pravou stranu
-    elif entity.pos.x >= conf.TILE_SIZE*(conf.ROWS_COLS-2)+conf.TILE_SIZE/2:
+            entity.pos.x = conf.TILE_SIZE*(conf.COLS-2) #prenastavi se pozice entity na pravou stranu
+    elif entity.pos.x >= conf.TILE_SIZE*(conf.COLS-2)+conf.TILE_SIZE/2:
         if entity.name == "player":
             if entity.mode == entity.normal_mode:
                 conf.cur_map.x += 1
@@ -77,12 +77,12 @@ def map_escape_check(entity):
         if entity.name == "player":
             if entity.mode == entity.normal_mode:
                 conf.cur_map.y -= 1
-                entity.pos.y = conf.TILE_SIZE*(conf.ROWS_COLS-2)
+                entity.pos.y = conf.TILE_SIZE*(conf.ROWS-2)
                 tilem.map_surface, conf.cur_map_data = tilem.change_map()
         else:
             entity.map.y -= 1
-            entity.pos.y = conf.TILE_SIZE*(conf.ROWS_COLS-2)
-    elif entity.pos.y >= conf.TILE_SIZE*(conf.ROWS_COLS-2)+conf.TILE_SIZE/2:
+            entity.pos.y = conf.TILE_SIZE*(conf.ROWS-2)
+    elif entity.pos.y >= conf.TILE_SIZE*(conf.ROWS-2)+conf.TILE_SIZE/2:
         if entity.name == "player":
             if entity.mode == entity.normal_mode:
                 conf.cur_map.y += 1
@@ -201,7 +201,7 @@ def check_water(player, map_data):
     except:
         return 0
 
-def get_path(filename):
+def get_path(filename): #od chat gpt
     """Funkce na cestu k souboru, důležité pro EXE i normální běh."""
     if getattr(sys, 'frozen', False):
         # Program běží jako EXE
@@ -212,7 +212,7 @@ def get_path(filename):
     
     return os.path.join(base_path, filename)
 
-def create_grid(map_data):
+def create_grid(map_data): #od chat gpt
     """Vytvoří grid pro pathfinding."""
     grid = Grid(matrix=[[0 if tile <= 19 else 1 for tile in row] for row in map_data])
     return grid
@@ -225,3 +225,16 @@ def debug(event):
             else:
                 conf.debug = True
 
+def draw_transparent_rect(target_surface, color, rect, alpha, border_radius=0):
+    """
+    Vykreslí průhledný (i zaoblený) obdélník na cílový surface.
+
+    :param target_surface: Surface, na který se má kreslit (např. screen)
+    :param color: RGB barva (např. (255, 0, 0))
+    :param rect: pygame.Rect nebo (x, y, šířka, výška)
+    :param alpha: Průhlednost (0–255)
+    :param border_radius: Poloměr zaoblení rohů (0 = bez zaoblení)
+    """
+    s = pygame.Surface((rect[2], rect[3]), pygame.SRCALPHA)
+    pygame.draw.rect(s, (*color, alpha), (0, 0, rect[2], rect[3]), border_radius=border_radius)
+    target_surface.blit(s, (rect[0], rect[1]))

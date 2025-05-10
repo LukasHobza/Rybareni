@@ -13,7 +13,7 @@ import shop
 from items import shop_object
 import fish_minigame
 
-WIDTH, HEIGHT = conf.TILE_SIZE * conf.ROWS_COLS,conf.TILE_SIZE * conf.ROWS_COLS + conf.TILE_SIZE #sirka, vyska okna
+WIDTH, HEIGHT = conf.TILE_SIZE * conf.COLS,conf.TILE_SIZE * conf.ROWS + conf.TILE_SIZE #sirka, vyska okna
 WIN = pygame.display.set_mode((0,0),pygame.FULLSCREEN) #herni okno
 pygame.display.set_caption("Rabářnická hra")
 
@@ -91,32 +91,29 @@ def main():
             shop.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
             fish_minigame.draw(WIN)
-
         """
         night_overlay = pygame.Surface((WIDTH, HEIGHT))
         night_overlay.set_alpha(120)  # nebo víc: 150, 180...
         night_overlay.fill((20, 20, 60))  # Tmavě modrá
         WIN.blit(night_overlay, (0, 0))
         """
-
         pygame.display.update()
 
     def move():
         """Vola pohyb vsech entit vcetne hrace."""
         if conf.gamemode == conf.GAMEMODE_GAME:
-            player.manager()
+            player.manager(dt)
             for entity in entities[:]:
                 if entity.map == conf.cur_map:
                     fce.map_escape_check(entity)
-                    entity.move(player)
+                    entity.move(player,dt)
                     if entity.hp <= 0:
                         entity.drop_item()
                         entities.remove(entity)
 
     #xd jen tohle je herní smyčka :)
     while run:
-        clock.tick(FPS) #aby hra nebezela ultra rychle ale jen 60fps
-        start_time = time.time()
+        dt = clock.tick(FPS) / 1000 
         
         move()
         redraw_window()
@@ -132,8 +129,7 @@ def main():
                     sys.exit()
             call_event_functions(event)
         call_functions()
-        end_time = time.time()
-        elapsed_time = end_time - start_time
+
         #print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
         #fce.show_cords(player) #vypisuje souradky hrace
 

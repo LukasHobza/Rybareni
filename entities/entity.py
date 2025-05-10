@@ -9,7 +9,8 @@ class Entity:
     def __init__(self, x,y, map,vel=1,hp=100):
         self.pos = pygame.Vector2(x,y)
         self.map = map
-        self.vel = vel
+        self.vel_tiles_per_sec = vel
+        self.vel_pixels_per_sec = vel * conf.TILE_SIZE
         self.direction = "stop"
 
         self.hp = hp
@@ -51,7 +52,7 @@ class Entity:
         self.path, _ = finder.find_path(start, end, grid)
         grid.cleanup()  # Uvolníme paměť
 
-    def move(self,player):
+    def move(self,player,dt):
         """Pohyb entity podle cesty."""
         self.path_update_counter += 1
         if self.path_update_counter >= self.path_update_interval or not self.path:
@@ -68,7 +69,7 @@ class Entity:
                 self.pos = target_pos
                 self.path.pop(1)
             else:
-                move = (target_pos - self.pos).normalize() * self.vel
+                move = (target_pos - self.pos).normalize() * self.vel_pixels_per_sec * dt
                 self.pos += move
 
     def draw_hp_bar(self, window):

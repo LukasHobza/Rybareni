@@ -5,15 +5,16 @@ import functions as fce
 from items import iron_sword
 
 class Player:
-    def __init__(self, x,y, vel,hp=100):
+    def __init__(self, x,y, vel=3,hp=100):
         self.name = "player"
         self.pos = pygame.Vector2(x,y)
         self.pos_before_event = pygame.Vector2(x,y)
         self.hp = hp
         self.max_hp = hp
-        self.vel = vel
+        self.vel_tiles_per_sec = vel
+        self.vel_pixels_per_sec = vel * conf.TILE_SIZE
         self.direction = "down"
-
+        
         #nezranitelnost 
         self.invincible_timer = 0 
         self.invincible_timer_length = 60*2
@@ -175,7 +176,7 @@ class Player:
         """Vykresleni hrace."""
         window.blit(self.img_cur, (self.pos))
 
-    def manager(self):
+    def manager(self,dt):
         """Pohyb hrace + reseni nezranitelnosti + utoceni hrace."""
         keys = pygame.key.get_pressed()
         move = pygame.Vector2(0,0)
@@ -204,7 +205,7 @@ class Player:
             if move != pygame.Vector2(0,0): #pokud se hrac hybe
                 self.sprite_counter += 1
                 move = move.normalize()
-                move *= self.vel
+                move *= self.vel_pixels_per_sec * dt
 
                 new_pos = self.pos + move
 
