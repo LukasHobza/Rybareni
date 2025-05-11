@@ -148,18 +148,18 @@ def check_collision(entity_pos, map_data):
                 
     return False  
 
-def alternative_move(entity, move):
+def alternative_move(entity, move, vel):
     if move.x < 0:
-        if not check_collision(pygame.Vector2(entity.pos.x-entity.vel,entity.pos.y),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x-vel,entity.pos.y),conf.cur_map_data):
             return "left"
     if move.x > 0:
-        if not check_collision(pygame.Vector2(entity.pos.x+entity.vel,entity.pos.y),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x+vel,entity.pos.y),conf.cur_map_data):
             return "right"
     if move.y < 0:
-        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y-entity.vel),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y-vel),conf.cur_map_data):
             return "up"
     if move.y > 0:
-        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y+entity.vel),conf.cur_map_data):
+        if not check_collision(pygame.Vector2(entity.pos.x,entity.pos.y+vel),conf.cur_map_data):
             return "down"
     return "none"
 

@@ -212,15 +212,15 @@ class Player:
                 if not fce.check_collision(new_pos, conf.cur_map_data): #kontrola jestli je nova pozice pristupna
                     self.pos = new_pos
                 else:
-                    match fce.alternative_move(self,move):
+                    match fce.alternative_move(self,move,self.vel_pixels_per_sec * dt):
                         case "left":
-                            self.pos.x -= self.vel
+                            self.pos.x -= self.vel_pixels_per_sec * dt
                         case "right":
-                            self.pos.x += self.vel
+                            self.pos.x += self.vel_pixels_per_sec * dt
                         case "up":
-                            self.pos.y -= self.vel
+                            self.pos.y -= self.vel_pixels_per_sec * dt
                         case "down":
-                            self.pos.y += self.vel
+                            self.pos.y += self.vel_pixels_per_sec * dt
 
         elif self.mode == self.attack_mode: #pokd hrac utoci
             self.attack()
