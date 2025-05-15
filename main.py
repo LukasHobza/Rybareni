@@ -111,7 +111,7 @@ def main():
                         entity.drop_item()
                         entities.remove(entity)
 
-    #xd jen tohle je herní smyčka :)
+    #jen tohle je herní smyčka :)
     while run:
         dt = clock.tick(FPS) / 1000 
         
