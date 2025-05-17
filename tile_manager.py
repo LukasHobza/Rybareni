@@ -27,30 +27,41 @@ class Map_data:
 
 img_tiles = []
 
-for i in range(71):
-    img_name ="rpg_" #vychozi nazev obrazku, potom prejmenovat na neco jinho nez rpg
-    if i <= 9: #aby to vypadalo ve stylu rpg_0 a ne rpg_
-        img_name+="0"
-    img_name +=str(i)+".png" #prida napr rpg_01.png
-    img_tiles.append(pygame.transform.scale(pygame.image.load(get_path("res/tiles/"+img_name)),(conf.TILE_SIZE, conf.TILE_SIZE))) #prida obrazek do listu
+for i in range(100):
+    try:
+        img_name ="rpg_" #vychozi nazev obrazku, potom prejmenovat na neco jinho nez rpg
+        if i <= 9: #aby to vypadalo ve stylu rpg_0 a ne rpg_
+            img_name+="0"
+        img_name +=str(i)+".png" #prida napr rpg_01.png
+        img_tiles.append(pygame.transform.scale(pygame.image.load(get_path("res/tiles/"+img_name)),(conf.TILE_SIZE, conf.TILE_SIZE))) #prida obrazek do listu
+    except:
+        pass
 
 tiles = []
 
-for i in range(71):
-    water = 0
-    if i >= 13 and i <= 15:
-        water = 1
+for i in range(100):
+    try:
+        water = 0
+        if i >= 0 and i <= 18:
+            water = 1
 
-    #prida vsechny ctverce do listu i s kolizi/bez kolize
-    if i <= 19:
-        tiles.append(Tile(img_tiles[i], True, water))
-    else:
-        tiles.append(Tile(img_tiles[i], False, water))
+        #prida vsechny ctverce do listu i s kolizi/bez kolize
+        if i <= conf.last_solid:
+            tiles.append(Tile(img_tiles[i], True, water))
+        else:
+            tiles.append(Tile(img_tiles[i], False, water))
+    except:
+        pass
 
 def load_map(filename):
-    """Nacte mapu ze souboru."""
-    with open(get_path("res/map/" + filename), "r") as f: #otevre soubor s mapou
-        return [list(map(int, filter(None, line.strip().split(',')))) for line in f.readlines()] #nacte mapu nekam, idk ale funguje to
+    """Nacte mapu ze souboru, preskoci prvnich 6 radku a ignoruje prazdne radky."""
+    with open(get_path("res/map/" + filename), "r") as f:
+        lines = f.readlines()[6:]  # preskoci prvni 4 radky
+        return [
+            list(map(int, filter(None, line.strip().split(','))))
+            for line in lines
+            if line.strip()  # preskoci prazdne radky
+        ]
 
 for x in range(10):
     for y in range(10):

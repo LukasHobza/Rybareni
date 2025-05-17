@@ -17,10 +17,10 @@ scale_factor = get_scaling_factor()
 pygame.init()
 
 ROWS = 19
-COLS = 19 #max 35 vic ne
+COLS = 33 #max 35 vic ne
 
-MAP_WIDTH_IN_TILES = COLS+0
-MAP_HEIGHT_IN_TILES = ROWS+1 #+1 kvuli inventari dole
+MAP_WIDTH_IN_TILES = COLS+1 #+1 kvuli inventari na boku
+MAP_HEIGHT_IN_TILES = ROWS+0 
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen_width, screen_height = screen.get_size()
@@ -39,6 +39,9 @@ offset_y = (screen_height - map_pixel_height) // 2
 #CONFIG
 items = []
 debug = False
+
+#tilemap
+last_solid = 18
 
 #gamemody
 gamemode = 0

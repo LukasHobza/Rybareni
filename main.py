@@ -1,4 +1,4 @@
-import pygame,time,sys
+import pygame,sys
 import player as p
 import config as conf
 import tile_manager as tilem
@@ -97,6 +97,7 @@ def main():
         night_overlay.fill((20, 20, 60))  # Tmavě modrá
         WIN.blit(night_overlay, (0, 0))
         """
+        #pygame.draw.rect(WIN, (150,150,150),[0,0,(1+conf.COLS)*conf.TILE_SIZE,conf.ROWS*conf.TILE_SIZE])
         pygame.display.update()
 
     def move():

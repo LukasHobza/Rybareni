@@ -214,7 +214,7 @@ def get_path(filename): #od chat gpt
 
 def create_grid(map_data): #od chat gpt
     """Vytvoří grid pro pathfinding."""
-    grid = Grid(matrix=[[0 if tile <= 19 else 1 for tile in row] for row in map_data])
+    grid = Grid(matrix=[[0 if tile <= conf.last_solid else 1 for tile in row] for row in map_data])
     return grid
 
 def debug(event):
@@ -225,7 +225,7 @@ def debug(event):
             else:
                 conf.debug = True
 
-def draw_transparent_rect(target_surface, color, rect, alpha, border_radius=0):
+def draw_transparent_rect(target_surface, color, rect, alpha, border_radius=0): #od chat gpt
     """
     Vykreslí průhledný (i zaoblený) obdélník na cílový surface.
 
