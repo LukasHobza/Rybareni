@@ -1,4 +1,4 @@
-Spuštění projektu: dvojklik na "main.exe"
+Spuštění projektu: dvojklik na "dist/main.exe"
 
 Manažer: Daniel Binar - binard.06@spst.eu
 Lukáš Hobza - hobzal.06@spst.eu 
