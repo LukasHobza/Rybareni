@@ -25,7 +25,7 @@ def spawn_items(items):
     """Spawnuje itemy."""
     items.append(iron_axe.Iron_axe(conf.TILE_SIZE*9, conf.TILE_SIZE*5,pygame.Vector2(5,5)))
     items.append(basic_fishing_rod.Basic_fishing_rod(conf.TILE_SIZE*9, conf.TILE_SIZE*7,pygame.Vector2(5,5)))
-    items.append(shop_object.Shop(conf.TILE_SIZE*9, conf.TILE_SIZE*15,pygame.Vector2(7,6)))
+    items.append(shop_object.Shop(conf.TILE_SIZE*3, conf.TILE_SIZE*3,pygame.Vector2(5,5)))
 
 def main():
     """Hlavni funkce."""
@@ -97,7 +97,6 @@ def main():
         night_overlay.fill((20, 20, 60))  # Tmavě modrá
         WIN.blit(night_overlay, (0, 0))
         """
-        #pygame.draw.rect(WIN, (150,150,150),[0,0,(1+conf.COLS)*conf.TILE_SIZE,conf.ROWS*conf.TILE_SIZE])
         pygame.display.update()
 
     def move():
@@ -131,7 +130,7 @@ def main():
             call_event_functions(event)
         call_functions()
 
-        #print(elapsed_time) #jak dlouho trva vykresleni jednoho snimku, nad 0,016 je to spatny
+        print(dt)
         #fce.show_cords(player) #vypisuje souradky hrace
 
 main()

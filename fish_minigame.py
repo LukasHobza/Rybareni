@@ -14,7 +14,7 @@ progress_width = conf.TILE_SIZE/2
 progress_heihgt = min_y-max_y
 
 #zeleny obdelnik
-paddle_speed = 1
+paddle_speed = conf.TILE_SIZE/40
 paddle_speed_cur = 0
 paddle_speed_max = 10
 
@@ -23,7 +23,7 @@ paddle_height = conf.TILE_SIZE*2
 paddle_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - paddle_height)
 
 #rybicka
-fish_speed = 1
+fish_speed = conf.TILE_SIZE/40
 fish_speed_cur = 0
 fish_speed_max = 7
 

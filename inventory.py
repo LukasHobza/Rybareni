@@ -19,7 +19,6 @@ def draw(window):
     pygame.draw.rect(window,"black",inv_background,0)
     pygame.draw.rect(window,"white",inv_background,3)
 
-    print(inv_cursor.x)
     pygame.draw.rect(window,"white",inv_cursor,3)#vykresleni kurzoru v invu
 
     #vykresleni itemu v invu
