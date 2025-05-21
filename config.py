@@ -44,10 +44,11 @@ debug = False
 last_solid = 18
 
 #gamemody
-gamemode = 0
+gamemode = 3
 GAMEMODE_GAME = 0
 GAMEMODE_SHOP = 1
 GAMEMODE_FISH_MINIGAME = 2
+GAMEMODE_MENU = 3
 
 #veci pro mapu
 map_data_ = []

@@ -12,6 +12,7 @@ import inventory as inv
 import shop
 from items import shop_object
 import fish_minigame
+import menu
 
 WIDTH, HEIGHT = conf.TILE_SIZE * conf.COLS,conf.TILE_SIZE * conf.ROWS + conf.TILE_SIZE #sirka, vyska okna
 WIN = pygame.display.set_mode((0,0),pygame.FULLSCREEN) #herni okno
@@ -47,6 +48,8 @@ def main():
             inv.manager(event)
         if conf.gamemode == conf.GAMEMODE_SHOP:
             shop.manager(event)
+        if conf.gamemode == conf.GAMEMODE_MENU:
+            pass
 
     def call_event_functions(event):
         """Vola fce ktere pracuji s event."""
@@ -56,6 +59,8 @@ def main():
         if conf.gamemode == conf.GAMEMODE_GAME:
             fce.drop_item(event,player)
             fce.use_item(event,player)
+        if conf.gamemode == conf.GAMEMODE_MENU:
+            menu.manager(event)
         fce.debug(event)
 
     def call_functions():
@@ -67,6 +72,8 @@ def main():
             fce.check_hit(player, entities)
         if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
             fish_minigame.manager()
+        if conf.gamemode == conf.GAMEMODE_MENU:
+            pass
 
     def redraw_window():
         """Prekresluje herni okno."""
@@ -91,12 +98,9 @@ def main():
             shop.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
             fish_minigame.draw(WIN)
-        """
-        night_overlay = pygame.Surface((WIDTH, HEIGHT))
-        night_overlay.set_alpha(120)  # nebo víc: 150, 180...
-        night_overlay.fill((20, 20, 60))  # Tmavě modrá
-        WIN.blit(night_overlay, (0, 0))
-        """
+        if conf.gamemode == conf.GAMEMODE_MENU:
+            menu.draw(WIN)
+
         pygame.display.update()
 
     def move():
@@ -114,7 +118,7 @@ def main():
     #jen tohle je herní smyčka :)
     while run:
         dt = clock.tick(FPS) / 1000 
-        
+
         move()
         redraw_window()
         for event in pygame.event.get():
