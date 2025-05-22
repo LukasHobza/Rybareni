@@ -20,7 +20,7 @@ pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
     """Spawnuje enemaky."""
-    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
+#pip install pathfinding    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
 
 def spawn_items(items):
     """Spawnuje itemy."""
@@ -60,7 +60,7 @@ def main():
             fce.drop_item(event,player)
             fce.use_item(event,player)
         if conf.gamemode == conf.GAMEMODE_MENU:
-            menu.manager(event)
+            menu.handle_menu_input(event) #menu event
         fce.debug(event)
 
     def call_functions():
@@ -99,7 +99,7 @@ def main():
         if conf.gamemode == conf.GAMEMODE_FISH_MINIGAME:
             fish_minigame.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_MENU:
-            menu.draw(WIN)
+            menu.draw_menu(WIN) #menu vykreslení
 
         pygame.display.update()
 
