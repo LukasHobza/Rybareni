@@ -20,7 +20,7 @@ pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
     """Spawnuje enemaky."""
-#pip install pathfinding    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
+    entities.append(slime.Slime(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
 
 def spawn_items(items):
     """Spawnuje itemy."""
