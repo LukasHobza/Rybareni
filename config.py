@@ -44,7 +44,7 @@ debug = False
 last_solid = 18
 
 #gamemody
-gamemode = 3
+gamemode = 0
 GAMEMODE_GAME = 0
 GAMEMODE_SHOP = 1
 GAMEMODE_FISH_MINIGAME = 2

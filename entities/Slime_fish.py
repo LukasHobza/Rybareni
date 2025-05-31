@@ -3,14 +3,14 @@ import config as conf
 import tile_manager as tilem
 import functions as fce
 from entities import entity as e
-from items import heal_potion
+from items import slime_fish_item
 from items import bronze_coin
 
-class Slime(e.Entity):
+class Slime_fish(e.Entity):
     def __init__(self, x,y,map,vel=1,health=100):
         super().__init__(x, y, map,vel, health)
         self.damage = 10
-        self.name = "Blue slime"
+        self.name = "Slime fish"
 
         self.img_1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/blue_slime/blue_slime1.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
         self.img_2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/blue_slime/blue_slime2.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
@@ -19,4 +19,4 @@ class Slime(e.Entity):
 
     def drop_item(self):
         """Slime dropne rnd item kdyz umre."""
-        conf.items.append(random.choice([heal_potion.Heal_otion(self.pos.x,self.pos.y,self.map),bronze_coin.Bronze_coin(self.pos.x,self.pos.y,self.map)]))
+        conf.items.append(slime_fish_item.slime_fish_item(self.pos.x,self.pos.y,self.map))

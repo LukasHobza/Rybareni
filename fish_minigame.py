@@ -1,6 +1,7 @@
 import pygame, random
 import config as conf
 import functions as fce
+from entities import Slime_fish
 
 background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
 background = pygame.Rect (conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
@@ -72,7 +73,7 @@ def draw(display):
     pygame.draw.rect(display, (20,20,255), [fish_pos.x, fish_pos.y, fish_width, fish_height], 0)#vykresli rybicku
     pygame.draw.rect(display, (255-progress_bar,progress_bar,0), [conf.TILE_SIZE*12,conf.TILE_SIZE*12-(progress_heihgt*(progress_bar/255)), progress_width, (progress_heihgt*(progress_bar/255))], 0)#vykresli progress bar
 
-def manager():
+def manager(player, entities):
     #zeleny obdelnik
     global paddle_speed_cur, fish_speed_cur,progress_bar
     keys = pygame.key.get_pressed()#ziska zmacknute klavesy
@@ -131,6 +132,8 @@ def manager():
         progress_bar-=1
 
     if progress_bar >= 250:#kdyz hrac chytne rybu
+        entities.append(Slime_fish.Slime_fish(player.pos.x,player.pos.y,conf.cur_map))
+        player.invincible_timer = player.invincible_timer_length
         conf.gamemode = conf.GAMEMODE_GAME
     elif progress_bar <= 2:#kdyz hrac nechytne rybu
         conf.gamemode = conf.GAMEMODE_GAME
