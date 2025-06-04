@@ -27,7 +27,7 @@ class Map_data:
 
 img_tiles = []
 
-for i in range(100):
+for i in range(200):
     try:
         img_name ="rpg_" #vychozi nazev obrazku, potom prejmenovat na neco jinho nez rpg
         if i <= 9: #aby to vypadalo ve stylu rpg_0 a ne rpg_
@@ -39,7 +39,7 @@ for i in range(100):
 
 tiles = []
 
-for i in range(100):
+for i in range(200):
     try:
         water = 0
         if i >= 0 and i <= 18:
