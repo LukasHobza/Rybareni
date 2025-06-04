@@ -14,6 +14,8 @@ class Player:
         self.vel_tiles_per_sec = vel
         self.vel_pixels_per_sec = vel * conf.TILE_SIZE
         self.direction = "down"
+
+        self.level = 1
         
         #nezranitelnost 
         self.invincible_timer = 0 

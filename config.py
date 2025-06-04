@@ -44,7 +44,7 @@ debug = False
 last_solid = 18
 
 #gamemody
-gamemode = 0
+gamemode = 3
 GAMEMODE_GAME = 0
 GAMEMODE_SHOP = 1
 GAMEMODE_FISH_MINIGAME = 2
@@ -59,6 +59,8 @@ cur_map_data = []
 inv_pos = 0
 inventory = []
 
+entities = []
+
 #veci pro obchod
 shop_pos = 0
 shop_delay = 0
@@ -68,3 +70,5 @@ coins = 50
 water_lake = 1
 water_river = 2
 water_ocean = 3
+
+cur_save_slot = 0

@@ -1,12 +1,14 @@
 import pygame
 import sys
 import functions as fce
+import json
+import os
 import config as conf
 
 pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 42)
 WHITE = (255, 255, 255)
 BLUE = (100, 100, 255)
-FONT = pixel_font
+FONT = pygame.font.SysFont("Arial", 48, bold=True)
 
 menu_items = ["new game", "continue", "exit"]
 selected_index = 0
@@ -19,7 +21,37 @@ slot_input = ""
 confirm_overwrite = False
 
 
+SAVE_FOLDER = "saves"
+os.makedirs(SAVE_FOLDER, exist_ok=True)
 
+def get_save_path(slot_index):
+    return os.path.join(SAVE_FOLDER, f"slot_{slot_index}.json")
+
+def save_game(slot_index,player):
+    data = {
+        "inventory": conf.inventory,
+        "level": player.level,
+        "positionX": player.pos.x,
+        "positionY": player.pos.y,
+        "mapX": conf.cur_map.x,
+        "mapY": conf.cur_map.y
+    }
+    with open(get_save_path(slot_index), "w") as f:
+        json.dump(data, f)
+
+def load_game(slot_index,player):
+    try:
+        with open(get_save_path(slot_index), "r") as f:
+            data = json.load(f)
+            conf.inventory = data.get("inventory", [])
+            player.level = data.get("level", 1)
+            player.pos.x = data.get("positionX", (0, 0))
+            player.pos.y = data.get("positionY", (0, 0))
+            conf.cur_map.x = data.get("mapX", 5)
+            conf.cur_map.y = data.get("mapY", 5)
+            return True
+    except FileNotFoundError:
+        return False
 
 def draw_menu(win):
     win.fill(WHITE)
@@ -30,38 +62,37 @@ def draw_menu(win):
         for i, text in enumerate(menu_items):
             label = FONT.render(text, True, BLUE)
             x = win.get_width() // 2 - label.get_width() // 2
-            y = conf.TILE_SIZE * 3 + i * conf.TILE_SIZE * 2 // 1.5
-            win.blit(label, (x, int(y)))
+            y = conf.TILE_SIZE * 4 + i * conf.TILE_SIZE * 2
+            win.blit(label, (x, y))
             if i == selected_index:
                 arrow = FONT.render(">", True, BLUE)
-                win.blit(arrow, (x - conf.TILE_SIZE, int(y)))
+                win.blit(arrow, (x - conf.TILE_SIZE, y))
 
     elif submenu_state in ["new_game", "continue"]:
         subtitle = pixel_font.render("Vyber slot:", True, BLUE)
-        win.blit(subtitle, (win.get_width() // 2 - subtitle.get_width() // 2, int(conf.TILE_SIZE * 2)))
+        win.blit(subtitle, (win.get_width() // 2 - subtitle.get_width() // 2, conf.TILE_SIZE * 2))
 
         for i in range(3):
             name = slot_names[i] if slot_names[i] else "--- prázdný slot ---"
             label = FONT.render(f"Slot {i+1}: {name}", True, BLUE)
             x = win.get_width() // 2 - label.get_width() // 2
-            y = conf.TILE_SIZE * 4 + i * conf.TILE_SIZE * 2 // 1.5
-            win.blit(label, (x, int(y)))
+            y = conf.TILE_SIZE * 4 + i * conf.TILE_SIZE * 2
+            win.blit(label, (x, y))
             if i == selected_slot:
                 arrow = FONT.render(">", True, BLUE)
-                win.blit(arrow, (x - conf.TILE_SIZE, int(y)))
+                win.blit(arrow, (x - conf.TILE_SIZE, y))
 
         if confirm_overwrite:
             prompt = FONT.render("Slot je obsazený. Přejmenovat? ENTER = Ano, ESC = Ne", True, BLUE)
-            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, int(conf.TILE_SIZE * 10)))
+            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, conf.TILE_SIZE * 13))
 
         elif input_active:
             prompt = FONT.render("Zadej jméno slotu:", True, BLUE)
             text_surface = FONT.render(slot_input, True, BLUE)
-            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, int(conf.TILE_SIZE * 10)))
-            win.blit(text_surface, (win.get_width() // 2 - text_surface.get_width() // 2, int(conf.TILE_SIZE * 11)))
+            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, conf.TILE_SIZE * 13))
+            win.blit(text_surface, (win.get_width() // 2 - text_surface.get_width() // 2, conf.TILE_SIZE * 14))
 
-
-def handle_menu_input(event):
+def handle_menu_input(event,player):
     global selected_index, submenu_state, selected_slot, slot_names
     global input_active, slot_input, confirm_overwrite
 
@@ -81,6 +112,10 @@ def handle_menu_input(event):
                 slot_names[selected_slot] = slot_input
                 input_active = False
                 submenu_state = None
+                #save_game(selected_slot,player)  # Uložení nového progresu
+                fce.reset(player)
+                conf.cur_save_slot = selected_slot
+                conf.gamemode = conf.GAMEMODE_GAME
                 return "start_new_game"  # <<< ZDE spustit novou hru
             elif event.key == pygame.K_BACKSPACE:
                 slot_input = slot_input[:-1]
@@ -122,5 +157,6 @@ def handle_menu_input(event):
                 elif submenu_state == "continue":
                     if slot_names[selected_slot] is not None:
                         submenu_state = None
-                        return "load_game"  # <<< ZDE načíst existující uloženou hru
+                        if load_game(selected_slot,player):
+                            return "load_game"  # <<< ZDE načíst existující uloženou hru
     return None

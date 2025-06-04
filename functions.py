@@ -3,6 +3,7 @@ from pathfinding.finder.a_star import AStarFinder
 import pygame,sys,os
 import tile_manager as tilem
 import config as conf
+from items import basic_fishing_rod, iron_sword
 
 def drop_item(event,player):
     """Kdyz je zmacknute Q hrac vyhodi item."""
@@ -238,3 +239,17 @@ def draw_transparent_rect(target_surface, color, rect, alpha, border_radius=0): 
     s = pygame.Surface((rect[2], rect[3]), pygame.SRCALPHA)
     pygame.draw.rect(s, (*color, alpha), (0, 0, rect[2], rect[3]), border_radius=border_radius)
     target_surface.blit(s, (rect[0], rect[1]))
+
+def reset(player):
+    conf.inventory = []
+    conf.inventory.append(basic_fishing_rod.Basic_fishing_rod(0,0,0))
+    conf.inventory.append(iron_sword.Iron_sword(0,0,0))
+
+    conf.entities = []
+
+    player.pos = pygame.Vector2(conf.TILE_SIZE*9,conf.TILE_SIZE*9)
+    player.level = 1
+
+    conf.coins = 6
+
+    conf.cur_map = pygame.Vector2(5,5)
