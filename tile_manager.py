@@ -94,5 +94,5 @@ def draw_map(window):
     """Vykresli mapu."""
     window.blit(map_surface, (0, 0))
 
-conf.cur_map_data = load_map("map55.txt") #nacte zakladni mapu
-map_surface = generate_map_surface(load_map("map55.txt")) #vygeneruje 
+conf.cur_map_data = load_map(f"map{int(conf.cur_map.x)}{int(conf.cur_map.y)}.txt") #nacte zakladni mapu
+map_surface = generate_map_surface(load_map(f"map{int(conf.cur_map.x)}{int(conf.cur_map.y)}.txt")) #vygeneruje 

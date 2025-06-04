@@ -138,7 +138,7 @@ def main():
         call_functions()
 
         #print(dt)
-        print(conf.items)
+        print(conf.cur_map)
         #fce.show_cords(player) #vypisuje souradky hrace
 
 main()

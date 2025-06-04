@@ -249,6 +249,7 @@ def reset(player):
 
     player.pos = pygame.Vector2(conf.TILE_SIZE*9,conf.TILE_SIZE*9)
     player.level = 1
+    player.hp = player.max_hp
 
     conf.coins = 6
 
