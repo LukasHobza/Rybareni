@@ -41,7 +41,7 @@ items = []
 debug = False
 
 #tilemap
-last_solid = 43
+last_solid = 47
 
 #gamemody
 gamemode = 3
