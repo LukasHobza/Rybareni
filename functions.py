@@ -4,6 +4,7 @@ import pygame,sys,os
 import tile_manager as tilem
 import config as conf
 from items import basic_fishing_rod, iron_sword
+import fish_minigame
 
 def drop_item(event,player):
     """Kdyz je zmacknute Q hrac vyhodi item."""
@@ -197,6 +198,7 @@ def check_water(player, map_data):
 
                 tile_rect = pygame.Rect(col_idx * tile_size, row_idx * tile_size, tile_size, tile_size)
                 if entity_rect.colliderect(tile_rect):
+                    fish_minigame.water_index = tile.water
                     return tile.water
                     
     except:

@@ -2,7 +2,7 @@ import pygame,sys
 import player as p
 import config as conf
 import tile_manager as tilem
-from entities import Slime_fish
+from entities import fish_blue_slime
 from items import basic_fishing_rod
 from items import iron_sword
 from items import iron_axe
@@ -20,7 +20,7 @@ pygame.display.set_caption("Rabářnická hra")
 
 def spawn_enemies(entities):
     """Spawnuje enemaky."""
-    #entities.append(Slime_fish.Slime_fish(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
+    #entities.append(Fish.Fish(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
 
 def spawn_items(items):
     """Spawnuje itemy."""

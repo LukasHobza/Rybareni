@@ -38,7 +38,9 @@ offset_y = (screen_height - map_pixel_height) // 2
 
 #CONFIG
 items = []
+entities = []
 debug = False
+cur_save_slot = 0
 
 #tilemap
 last_solid = 47
@@ -59,8 +61,6 @@ cur_map_data = []
 inv_pos = 0
 inventory = []
 
-entities = []
-
 #veci pro obchod
 shop_pos = 0
 shop_delay = 0
@@ -70,5 +70,3 @@ coins = 50
 water_lake = 1
 water_river = 2
 water_ocean = 3
-
-cur_save_slot = 0

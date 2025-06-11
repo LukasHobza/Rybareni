@@ -41,8 +41,10 @@ tiles = []
 
 for i in range(200):
     try:
-        water = 0
-        if i >= 12 and i <= 47:
+        water = -1
+        if i >= 12 and i <= 29:
+            water = 0
+        elif i >= 30 and i <= 47:
             water = 1
 
         #prida vsechny ctverce do listu i s kolizi/bez kolize

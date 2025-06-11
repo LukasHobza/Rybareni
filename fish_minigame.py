@@ -1,7 +1,9 @@
 import pygame, random
 import config as conf
 import functions as fce
-from entities import Slime_fish
+from entities import fish_blue_slime
+
+water_index = 0
 
 background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
 background = pygame.Rect (conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
@@ -132,7 +134,12 @@ def manager(player, entities):
         progress_bar-=1
 
     if progress_bar >= 250:#kdyz hrac chytne rybu
-        entities.append(Slime_fish.Slime_fish(player.pos.x,player.pos.y,conf.cur_map))
+        match water_index:
+            case 0:
+                entities.append(fish_blue_slime.Fish(player.pos.x,player.pos.y,conf.cur_map,1,100,10))
+            case 1:
+                entities.append(fish_blue_slime.Fish(player.pos.x,player.pos.y,conf.cur_map,3,200,20))
+
         player.invincible_timer = player.invincible_timer_length
         conf.gamemode = conf.GAMEMODE_GAME
     elif progress_bar <= 2:#kdyz hrac nechytne rybu
