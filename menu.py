@@ -8,6 +8,7 @@ import tile_manager as tilem
 
 SAVE_DIR = "saves"
 os.makedirs(SAVE_DIR, exist_ok=True)
+menu_img = pygame.transform.scale(pygame.image.load(fce.get_path("res/menuHry.png")),(conf.screen_width, conf.screen_height))
 
 pygame.init()
 pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 42)
@@ -71,7 +72,7 @@ for i in range(3):
 
 
 def draw_menu(win):
-    win.fill(WHITE)
+    win.blit(menu_img,(0,0))
     title = pixel_font.render("nazev hry", True, BLUE)
     win.blit(title, (win.get_width() // 2 - title.get_width() // 2, 50))
 
