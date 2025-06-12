@@ -198,7 +198,6 @@ def check_water(player, map_data):
 
                 tile_rect = pygame.Rect(col_idx * tile_size, row_idx * tile_size, tile_size, tile_size)
                 if entity_rect.colliderect(tile_rect):
-                    fish_minigame.water_index = tile.water
                     return tile.water
                     
     except:
@@ -244,11 +243,9 @@ def draw_transparent_rect(target_surface, color, rect, alpha, border_radius=0): 
 
 def reset(player):
     conf.inventory = []
-    conf.inventory.append(basic_fishing_rod.Basic_fishing_rod(0,0,pygame.Vector2(0,0)))
     conf.inventory.append(iron_sword.Iron_sword(0,0,pygame.Vector2(0,0)))
 
     conf.items = []
-    conf.items.append(iron_axe.Iron_axe(conf.TILE_SIZE*9, conf.TILE_SIZE*5,pygame.Vector2(5,5)))
     conf.items.append(basic_fishing_rod.Basic_fishing_rod(conf.TILE_SIZE*9, conf.TILE_SIZE*7,pygame.Vector2(5,5)))
     conf.items.append(shop_object.Shop(conf.TILE_SIZE*3, conf.TILE_SIZE*3,pygame.Vector2(5,5)))
 

@@ -18,18 +18,6 @@ WIDTH, HEIGHT = conf.TILE_SIZE * conf.COLS,conf.TILE_SIZE * conf.ROWS + conf.TIL
 WIN = pygame.display.set_mode((0,0),pygame.FULLSCREEN) #herni okno
 pygame.display.set_caption("Rabářnická hra")
 
-def spawn_enemies(entities):
-    """Spawnuje enemaky."""
-    #entities.append(Fish.Fish(conf.TILE_SIZE* 9 ,conf.TILE_SIZE* 9 ,pygame.Vector2(5,5)))
-
-def spawn_items(items):
-    """Spawnuje itemy."""
-    """
-    items.append(iron_axe.Iron_axe(conf.TILE_SIZE*9, conf.TILE_SIZE*5,pygame.Vector2(5,5)))
-    items.append(basic_fishing_rod.Basic_fishing_rod(conf.TILE_SIZE*9, conf.TILE_SIZE*7,pygame.Vector2(5,5)))
-    items.append(shop_object.Shop(conf.TILE_SIZE*3, conf.TILE_SIZE*3,pygame.Vector2(5,5)))
-    """
-
 def main():
     """Hlavni funkce."""
     clock = pygame.time.Clock()
@@ -37,10 +25,6 @@ def main():
     FPS = 60
 
     player = p.Player(conf.TILE_SIZE*9,conf.TILE_SIZE*9,5)
-
-    
-    spawn_enemies(conf.entities)
-    spawn_items(conf.items)
 
     def call_mouse_event_functions(event):
         """Vola fce ktere pracuji s mysi."""
