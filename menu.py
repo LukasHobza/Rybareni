@@ -5,7 +5,7 @@ import json
 import os
 import config as conf  # <-- Import sdílených proměnných
 import tile_manager as tilem
-from items import basic_fishing_rod, heal_potion, iron_axe,iron_sword, shop_object
+from items import basic_fishing_rod, heal_potion, iron_axe,iron_sword, shop_object,slime_fish_item
 from PIL import Image
 
 ############################### vytvoreni gifu do hl menu
@@ -101,6 +101,8 @@ def load_game(slot_index, player):
                         conf.inventory.append(iron_axe.Iron_axe(0,0,pygame.Vector2(0,0)))
                     case "Iron sword":
                         conf.inventory.append(iron_sword.Iron_sword(0,0,pygame.Vector2(0,0)))
+                    case "Slime fish item":
+                        conf.inventory.append(slime_fish_item.slime_fish_item(0,0,pygame.Vector2(0,0)))
 
 # === NAČTI JMÉNA SLOTŮ ===
 for i in range(3):

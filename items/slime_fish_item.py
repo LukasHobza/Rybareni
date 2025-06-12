@@ -4,7 +4,7 @@ import config as conf
 import functions as fce
 
 class slime_fish_item(i.Item):
-    def __init__(self, x,y, map,val):
+    def __init__(self, x,y, map,val=10):
         super().__init__(x, y, map)
         self.name = "Slime fish item"
         self.value = val
