@@ -115,6 +115,8 @@ def draw_menu(win):
     global frames,frame_index
     win.blit(menu_img,(0,0))
 
+    win.blit(frames[frame_index], (0, conf.TILE_SIZE*11))
+    win.blit(frames[frame_index], (0, conf.TILE_SIZE*13))
     win.blit(frames[frame_index], (0, conf.TILE_SIZE*15))
     frame_index = (frame_index + 1) % len(frames)
 
