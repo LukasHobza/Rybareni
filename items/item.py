@@ -19,3 +19,12 @@ class Item:
 
     def interact():
         pass
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'pos_x': self.pos.x,
+            'pos_y': self.pos.y,
+            'map_x': self.map.x,
+            'map_y': self.map.y
+        }

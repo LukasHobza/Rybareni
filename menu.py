@@ -5,6 +5,23 @@ import json
 import os
 import config as conf  # <-- Import sdílených proměnných
 import tile_manager as tilem
+from items import basic_fishing_rod, heal_potion, iron_axe,iron_sword, shop_object,slime_fish_item
+from PIL import Image
+
+############################### vytvoreni gifu do hl menu
+gif = Image.open(fce.get_path("res/gif/fish.gif"))
+frames = []
+
+try:
+    while True:
+        frame = gif.copy().convert("RGBA")
+        pygame_image = pygame.image.fromstring(frame.tobytes(), frame.size, frame.mode)
+        frames.append(pygame_image)
+        gif.seek(len(frames))  # další frame
+except EOFError:
+    pass  # konec GIFu
+frame_index = 0
+###############################
 
 SAVE_DIR = "saves"
 os.makedirs(SAVE_DIR, exist_ok=True)
@@ -13,8 +30,8 @@ menu_img = pygame.transform.scale(pygame.image.load(fce.get_path("res/menuHry.pn
 pygame.init()
 pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 42)
 WHITE = (255, 255, 255)
-BLUE = (100, 100, 255)
-FONT = pygame.font.SysFont("Arial", 48, bold=True)
+TEXT_COLOR = (255, 0, 0)
+FONT = pixel_font
 
 menu_items = ["new game", "continue", "exit"]
 selected_index = 0
@@ -34,14 +51,15 @@ def get_slot_path(slot_index):
 def save_game(slot_index, player):
     data = {
         "name": slot_names[slot_index],
-        "inventory": conf.inventory,
         "level": player.level,
         "hp": player.hp,
         "positionX": player.pos.x,
         "positionY": player.pos.y,
         "mapX": conf.cur_map.x,
         "mapY": conf.cur_map.y,
-        "coins": conf.coins
+        "coins": conf.coins,
+        "map_items": [item.to_dict() for item in conf.items],
+        "inventory_items": [item.to_dict() for item in conf.inventory]
     }
     with open(get_slot_path(slot_index), "w") as f:
         json.dump(data, f)
@@ -52,7 +70,6 @@ def load_game(slot_index, player):
     if os.path.exists(path):
         with open(path, "r") as f:
             data = json.load(f)
-            conf.inventory = data.get("inventory", [])
             player.level = data.get("level", 1)
             player.hp = data.get("hp", 100)
             player.pos.x = data.get("positionX", 400)
@@ -61,6 +78,31 @@ def load_game(slot_index, player):
             conf.cur_map.y = data.get("mapY", 5)
             conf.coins = data.get("coins", 6)
 
+            for d in data.get("map_items", []):
+                match d.get("name", []):
+                    case "Basic fishing rod":
+                        conf.items.append(basic_fishing_rod.Basic_fishing_rod(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Heal potion":
+                        conf.items.append(heal_potion.Heal_otion(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Iron axe":
+                        conf.items.append(iron_axe.Iron_axe(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Iron sword":
+                        conf.items.append(iron_sword.Iron_sword(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Shop":
+                        conf.items.append(shop_object.Shop(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+
+            for d in data.get("inventory_items", []):
+                match d.get("name", []):
+                    case "Basic fishing rod":
+                        conf.inventory.append(basic_fishing_rod.Basic_fishing_rod(0,0,pygame.Vector2(0,0)))
+                    case "Heal potion":
+                        conf.inventory.append(heal_potion.Heal_otion(0,0,pygame.Vector2(0,0)))
+                    case "Iron axe":
+                        conf.inventory.append(iron_axe.Iron_axe(0,0,pygame.Vector2(0,0)))
+                    case "Iron sword":
+                        conf.inventory.append(iron_sword.Iron_sword(0,0,pygame.Vector2(0,0)))
+                    case "Slime fish item":
+                        conf.inventory.append(slime_fish_item.slime_fish_item(0,0,pygame.Vector2(0,0)))
 
 # === NAČTI JMÉNA SLOTŮ ===
 for i in range(3):
@@ -72,44 +114,50 @@ for i in range(3):
 
 
 def draw_menu(win):
+    global frames,frame_index
     win.blit(menu_img,(0,0))
-    title = pixel_font.render("nazev hry", True, BLUE)
-    win.blit(title, (win.get_width() // 2 - title.get_width() // 2, 50))
+
+    win.blit(frames[frame_index], (0, conf.TILE_SIZE*11))
+    win.blit(frames[frame_index], (0, conf.TILE_SIZE*13))
+    win.blit(frames[frame_index], (0, conf.TILE_SIZE*15))
+    frame_index = (frame_index + 1) % len(frames)
+
 
     if submenu_state is None:
         for i, text in enumerate(menu_items):
-            label = FONT.render(text, True, BLUE)
+            label = FONT.render(text, True, TEXT_COLOR)
             x = win.get_width() // 2 - label.get_width() // 2
-            y = 200 + i * 80
+            y = 200 + 200 + i * 80
             win.blit(label, (x, y))
             if i == selected_index:
-                arrow = FONT.render(">", True, BLUE)
+                arrow = FONT.render(" > ", True, TEXT_COLOR)
                 win.blit(arrow, (x - 50, y))
 
     elif submenu_state in ["new_game", "continue"]:
-        subtitle = pixel_font.render("Vyber slot:", True, BLUE)
+        """
+        subtitle = pixel_font.render("Vyber slot:", True, TEXT_COLOR)
         win.blit(subtitle, (win.get_width() // 2 - subtitle.get_width() // 2, 120))
+        """
 
         for i in range(3):
             name = slot_names[i] if slot_names[i] else "--- prázdný slot ---"
-            label = FONT.render(f"Slot {i+1}: {name}", True, BLUE)
+            label = FONT.render(f"Slot {i+1}: {name}", True, TEXT_COLOR)
             x = win.get_width() // 2 - label.get_width() // 2
-            y = 200 + i * 80
+            y = 200 +200 + i * 80
             win.blit(label, (x, y))
             if i == selected_slot:
-                arrow = FONT.render(">", True, BLUE)
+                arrow = FONT.render(">", True, TEXT_COLOR)
                 win.blit(arrow, (x - 50, y))
 
         if confirm_overwrite:
-            prompt = FONT.render("Slot je obsazený. Přejmenovat? ENTER = Ano, ESC = Ne", True, BLUE)
-            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, 480))
+            prompt = FONT.render("Slot je obsazený. Přejmenovat? ENTER = Ano, ESC = Ne", True, TEXT_COLOR)
+            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, 480+200))
 
         elif input_active:
-            prompt = FONT.render("Zadej jméno slotu:", True, BLUE)
-            text_surface = FONT.render(slot_input, True, BLUE)
-            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, 480))
-            win.blit(text_surface, (win.get_width() // 2 - text_surface.get_width() // 2, 540))
-
+            prompt = FONT.render("Zadej jméno slotu:", True, TEXT_COLOR)
+            text_surface = FONT.render(slot_input, True, TEXT_COLOR)
+            win.blit(prompt, (win.get_width() // 2 - prompt.get_width() // 2, 480+200))
+            win.blit(text_surface, (win.get_width() // 2 - text_surface.get_width() // 2, 540+200))
 
 def handle_menu_input(event,player):
     global selected_index, submenu_state, selected_slot, slot_names

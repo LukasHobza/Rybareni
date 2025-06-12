@@ -7,6 +7,7 @@ class Heal_otion(i.Item):
     def __init__(self, x,y, map):
         super().__init__(x, y, map)
         self.name = "Heal potion"
+        self.price = 5
     
         self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/objects/heal_potion.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 

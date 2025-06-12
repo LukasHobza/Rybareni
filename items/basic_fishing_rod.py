@@ -25,15 +25,19 @@ class Basic_fishing_rod(i.Item):
         """Nastavi aktualni prut + nastavi ze hrac rybari."""
         if not player.tool.name == self.name: #nastavi prut pokud uz neni nastaveny
             player.tool = self
-
-        if player.mode == player.normal_mode and fce.check_water(player, conf.cur_map_data) != -1:
+        water_index = fce.check_water(player, conf.cur_map_data)
+        if player.mode == player.normal_mode and water_index != -1:
             player.mode = player.fish_mode
             player.sprite_counter = 0 #sprite counter reset
 
             player.pos_before_event = player.pos + (0,0) #ulozi pozici pred utocenim
             #aby hrac nedashoval
-            
-            fish_minigame.reset("easy")
+            fish_minigame.water_index = water_index
+            match water_index:
+                case 0:
+                    fish_minigame.reset("easy")
+                case 1:
+                    fish_minigame.reset("hard")
             if player.direction == "up":
                 player.pos.y -= conf.TILE_SIZE
             elif player.direction == "left":
