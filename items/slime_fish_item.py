@@ -9,7 +9,7 @@ class slime_fish_item(i.Item):
         self.name = "Heal potion"
         self.value = val
     
-        self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/blue_slime/blue_slime1.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
+        self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/fish/item_image/blue_slime.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 
     def use(self, player):
         """Pri pouziti doplni zivoty hraci."""

@@ -13,8 +13,8 @@ class Fish(e.Entity):
         self.name = "Slime fish"
         self.value = val
 
-        self.img_1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/blue_slime/blue_slime1.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
-        self.img_2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/blue_slime/blue_slime2.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
+        self.img_1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/fish/animation/blue_slime1.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
+        self.img_2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/fish/animation/blue_slime2.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 
         self.img_cur = self.img_1
 
