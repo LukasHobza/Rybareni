@@ -1,7 +1,7 @@
 import pygame, random
 import config as conf
 import functions as fce
-from entities import fish_blue_slime
+from entities import fish_blue_slime,fish_basic
 
 water_index = 0
 
@@ -136,9 +136,9 @@ def manager(player, entities):
     if progress_bar >= 250:#kdyz hrac chytne rybu
         match water_index:
             case 0:
-                entities.append(fish_blue_slime.Fish(player.pos.x,player.pos.y,conf.cur_map,1,100,10))
+                entities.append(fish_blue_slime.Fish(player.pos.x,player.pos.y,conf.cur_map+pygame.Vector2(0,0),1,100,10))
             case 1:
-                entities.append(fish_blue_slime.Fish(player.pos.x,player.pos.y,conf.cur_map,3,200,20))
+                entities.append(fish_basic.Fish(player.pos.x,player.pos.y,conf.cur_map+pygame.Vector2(0,0),2,200,15))
 
         player.invincible_timer = player.invincible_timer_length
         conf.gamemode = conf.GAMEMODE_GAME

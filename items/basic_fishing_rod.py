@@ -12,14 +12,14 @@ class Basic_fishing_rod(i.Item):
         self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/objects/basic_fishing_rod.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 
         #nejsou obrazky, potreba predelat
-        self.img_left1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_left2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_right1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_right2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
-        self.img_up1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_up2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_down1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
-        self.img_down2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/hrac_rybareni.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
+        self.img_left1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_left1.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
+        self.img_left2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_left2.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
+        self.img_right1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_right1.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
+        self.img_right2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_right2.png")),(conf.TILE_SIZE*2, conf.TILE_SIZE))
+        self.img_up1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_up1.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
+        self.img_up2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_up2.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
+        self.img_down1 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_down1.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
+        self.img_down2 = pygame.transform.scale(pygame.image.load(fce.get_path("res/player/fishing/player_fish_down2.png")),(conf.TILE_SIZE, conf.TILE_SIZE*2))
 
     def use(self, player):
         """Nastavi aktualni prut + nastavi ze hrac rybari."""

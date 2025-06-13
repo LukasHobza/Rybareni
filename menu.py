@@ -25,7 +25,7 @@ frame_index = 0
 
 SAVE_DIR = "saves"
 os.makedirs(SAVE_DIR, exist_ok=True)
-menu_img = pygame.transform.scale(pygame.image.load(fce.get_path("res/menuHry.png")),(conf.screen_width, conf.screen_height))
+menu_img = pygame.transform.scale(pygame.image.load(fce.get_path("res/menuHry.png")),((conf.COLS+1)*conf.TILE_SIZE, conf.ROWS*conf.TILE_SIZE))
 
 pygame.init()
 pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 42)
