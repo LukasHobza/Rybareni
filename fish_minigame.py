@@ -34,7 +34,7 @@ fish_width = conf.TILE_SIZE/2
 fish_height = conf.TILE_SIZE/2
 fish_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - fish_height)
 
-def reset(difficulty):
+def reset(difficulty, height):
     global paddle_speed,paddle_speed_cur,paddle_speed_max,paddle_height,paddle_pos,progress_bar
     progress_bar = 20
 
@@ -43,7 +43,7 @@ def reset(difficulty):
     paddle_speed_cur = 0
     paddle_speed_max = 5
 
-    paddle_height = conf.TILE_SIZE*2
+    paddle_height = height
     paddle_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - paddle_height)
 
     #ryba

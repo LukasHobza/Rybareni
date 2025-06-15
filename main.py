@@ -45,6 +45,10 @@ def main():
             fce.use_item(event,player)
         if conf.gamemode == conf.GAMEMODE_MENU:
             menu.handle_menu_input(event, player) #menu event
+        if conf.gamemode == conf.GAMEMODE_INTRO:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    conf.gamemode = conf.GAMEMODE_GAME
         fce.debug(event)
 
     def call_functions():
@@ -85,6 +89,8 @@ def main():
             fish_minigame.draw(WIN)
         if conf.gamemode == conf.GAMEMODE_MENU:
             menu.draw_menu(WIN) #menu vykreslení
+        if conf.gamemode == conf.GAMEMODE_INTRO:
+            fce.draw_intro(WIN)
 
         pygame.display.update()
 
@@ -116,7 +122,7 @@ def main():
                 if event.key == pygame.K_DELETE:
                     pygame.quit()
                     sys.exit()
-                if event.key == pygame.K_p:
+                if event.key == pygame.K_p and conf.gamemode == conf.GAMEMODE_GAME:
                     menu.save_game(conf.cur_save_slot,player)
             call_event_functions(event)
         call_functions()

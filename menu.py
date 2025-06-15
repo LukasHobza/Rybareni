@@ -5,7 +5,7 @@ import json
 import os
 import config as conf  # <-- Import sdílených proměnných
 import tile_manager as tilem
-from items import basic_fishing_rod, heal_potion, iron_axe,iron_sword, shop_object,slime_fish_item, basic_fish_item
+from items import basic_fishing_rod, heal_potion, iron_axe,iron_sword, shop_object,slime_fish_item, basic_fish_item,iron_fishing_rod
 from PIL import Image
 
 ############################### vytvoreni gifu do hl menu
@@ -90,6 +90,10 @@ def load_game(slot_index, player):
                         conf.items.append(iron_sword.Iron_sword(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Shop":
                         conf.items.append(shop_object.Shop(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Basic fish item":
+                        conf.inventory.append(basic_fish_item.basic_fish_item(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                    case "Iron fishing rod":
+                        conf.items.append(iron_fishing_rod.Iron_fishing_rod(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
 
             for d in data.get("inventory_items", []):
                 match d.get("name", []):
@@ -105,6 +109,8 @@ def load_game(slot_index, player):
                         conf.inventory.append(slime_fish_item.slime_fish_item(0,0,pygame.Vector2(0,0)))
                     case "Basic fish item":
                         conf.inventory.append(basic_fish_item.basic_fish_item(0,0,pygame.Vector2(0,0)))
+                    case "Iron fishing rod":
+                        conf.inventory.append(iron_fishing_rod.Iron_fishing_rod(0,0,pygame.Vector2(0,0)))
 
 # === NAČTI JMÉNA SLOTŮ ===
 for i in range(3):
@@ -184,7 +190,7 @@ def handle_menu_input(event,player):
                 conf.cur_save_slot = selected_slot
                 fce.reset(player)
                 #save_game(selected_slot, player)
-                conf.gamemode = conf.GAMEMODE_GAME
+                conf.gamemode = conf.GAMEMODE_INTRO
                 return "start_new_game"
             elif event.key == pygame.K_BACKSPACE:
                 slot_input = slot_input[:-1]

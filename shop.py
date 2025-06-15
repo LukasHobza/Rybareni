@@ -1,7 +1,7 @@
 import pygame
 import functions as fce
 import config as conf
-from items import iron_axe,heal_potion
+from items import iron_axe,heal_potion,iron_fishing_rod,cisco_certificate
 
 #komentare tady dodelam nekdy
 
@@ -10,6 +10,8 @@ pixel_font = pygame.font.Font(fce.get_path("res/font/Minecraftia-Regular.ttf"), 
 shop_inventory = []
 shop_inventory.append(iron_axe.Iron_axe(conf.TILE_SIZE*0, conf.TILE_SIZE*0,pygame.Vector2(5,5)))
 shop_inventory.append(heal_potion.Heal_otion(conf.TILE_SIZE*0, conf.TILE_SIZE*0,pygame.Vector2(5,5)))
+shop_inventory.append(iron_fishing_rod.Iron_fishing_rod(conf.TILE_SIZE*0, conf.TILE_SIZE*0,pygame.Vector2(5,5)))
+shop_inventory.append(cisco_certificate.Cisco_certificate(conf.TILE_SIZE*0, conf.TILE_SIZE*0,pygame.Vector2(5,5)))
 
 shop_all_background = pygame.Rect(conf.TILE_SIZE*2,conf.TILE_SIZE*9,conf.TILE_SIZE*5,conf.TILE_SIZE*1)
 shop_background = pygame.Rect(conf.TILE_SIZE*2,conf.TILE_SIZE*10,conf.TILE_SIZE*15,conf.TILE_SIZE*1)

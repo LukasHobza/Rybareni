@@ -4,11 +4,12 @@ import config as conf
 import functions as fce
 import fish_minigame
 
-class Basic_fishing_rod(i.Item):
+class Iron_fishing_rod(i.Item):
     def __init__(self, x,y, map):
         super().__init__(x, y, map)
-        self.name = "Basic fishing rod"
-        self.height = conf.TILE_SIZE*2
+        self.name = "Iron fishing rod"
+        self.height = conf.TILE_SIZE*4
+        self.price = 2
     
         self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/objects/basic_fishing_rod.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 

@@ -6,6 +6,8 @@ import config as conf
 from items import basic_fishing_rod, iron_sword,shop_object,iron_axe
 import fish_minigame
 
+
+
 def drop_item(event,player):
     """Kdyz je zmacknute Q hrac vyhodi item."""
     if event.type == pygame.KEYDOWN:
@@ -258,3 +260,10 @@ def reset(player):
     conf.coins = 6
 
     conf.cur_map = pygame.Vector2(5,5)
+
+pixel_font = pygame.font.Font(get_path("res/font/Minecraftia-Regular.ttf"), 52)
+intro_img = pygame.transform.scale(pygame.image.load(get_path("res/intro.png")),((conf.COLS+1)*conf.TILE_SIZE, conf.ROWS*conf.TILE_SIZE))
+def draw_intro(window):
+    window.blit(intro_img,(0,0))
+    space_text = pixel_font.render(f"Press space",1,"red") #vytvori hp text, font, barva....
+    window.blit(space_text,(5,conf.TILE_SIZE*6)) #vykresli hp text
