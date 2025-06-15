@@ -9,7 +9,7 @@ class Iron_fishing_rod(i.Item):
         super().__init__(x, y, map)
         self.name = "Iron fishing rod"
         self.height = conf.TILE_SIZE*4
-        self.price = 2
+        self.price = 20
     
         self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/objects/basic_fishing_rod.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 
