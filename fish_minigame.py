@@ -3,6 +3,9 @@ import config as conf
 import functions as fce
 from entities import fish_blue_slime,fish_basic
 
+
+##
+
 water_index = 0
 
 background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)

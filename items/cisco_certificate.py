@@ -7,7 +7,7 @@ class Cisco_certificate(i.Item):
     def __init__(self, x,y, map):
         super().__init__(x, y, map)
         self.name = "Cisco certificate"
-        self.price = 1
+        self.price = 150
     
         self.img = pygame.transform.scale(pygame.image.load(fce.get_path("res/objects/cisco.png")),(conf.TILE_SIZE, conf.TILE_SIZE))
 

@@ -118,6 +118,9 @@ def check_hit(player, entities):
                 if player.invincible_timer == 0:
                     player.invincible_timer = player.invincible_timer_length
                     player.hp-=enemy.damage
+                    if player.hp <= 0:
+                        pygame.quit()
+                        sys.exit()
                 return True  # Kolize mezi hráčem a nepřítelem
 
     return False  # Žádná kolize
