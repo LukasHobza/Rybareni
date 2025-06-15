@@ -43,18 +43,16 @@ input_active = False
 slot_input = ""
 confirm_overwrite = False
 
-
 def get_slot_path(slot_index):
     return os.path.join(SAVE_DIR, f"slot{slot_index}.json")
-
 
 def save_game(slot_index, player):
     data = {
         "name": slot_names[slot_index],
         "level": player.level,
         "hp": player.hp,
-        "positionX": player.pos.x,
-        "positionY": player.pos.y,
+        "positionX": player.pos.x/conf.TILE_SIZE,
+        "positionY": player.pos.y/conf.TILE_SIZE,
         "mapX": conf.cur_map.x,
         "mapY": conf.cur_map.y,
         "coins": conf.coins,
@@ -72,8 +70,8 @@ def load_game(slot_index, player):
             data = json.load(f)
             player.level = data.get("level", 1)
             player.hp = data.get("hp", 100)
-            player.pos.x = data.get("positionX", 400)
-            player.pos.y = data.get("positionY", 400)
+            player.pos.x = data.get("positionX", 6)*conf.TILE_SIZE
+            player.pos.y = data.get("positionY", 6)*conf.TILE_SIZE
             conf.cur_map.x = data.get("mapX", 5)
             conf.cur_map.y = data.get("mapY", 5)
             conf.coins = data.get("coins", 6)
@@ -81,19 +79,19 @@ def load_game(slot_index, player):
             for d in data.get("map_items", []):
                 match d.get("name", []):
                     case "Basic fishing rod":
-                        conf.items.append(basic_fishing_rod.Basic_fishing_rod(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(basic_fishing_rod.Basic_fishing_rod(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Heal potion":
-                        conf.items.append(heal_potion.Heal_otion(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(heal_potion.Heal_otion(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Iron axe":
-                        conf.items.append(iron_axe.Iron_axe(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(iron_axe.Iron_axe(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Iron sword":
-                        conf.items.append(iron_sword.Iron_sword(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(iron_sword.Iron_sword(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Shop":
-                        conf.items.append(shop_object.Shop(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(shop_object.Shop(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Basic fish item":
-                        conf.inventory.append(basic_fish_item.basic_fish_item(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.inventory.append(basic_fish_item.basic_fish_item(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
                     case "Iron fishing rod":
-                        conf.items.append(iron_fishing_rod.Iron_fishing_rod(d.get("pos_x",0),d.get("pos_y",0),pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
+                        conf.items.append(iron_fishing_rod.Iron_fishing_rod(d.get("pos_x",0)*conf.TILE_SIZE,d.get("pos_y",0)*conf.TILE_SIZE,pygame.Vector2(d.get("map_x",0),d.get("map_x",0))))
 
             for d in data.get("inventory_items", []):
                 match d.get("name", []):

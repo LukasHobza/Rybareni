@@ -65,7 +65,7 @@ class Entity:
             target_pos = pygame.Vector2(target.x * conf.TILE_SIZE, target.y * conf.TILE_SIZE)
 
             #Pokud jsme dostatečně blízko, přejdi na další bod v cestě
-            if self.pos.distance_to(target_pos) < 2:
+            if self.pos.distance_to(target_pos) < 4:
                 self.pos = target_pos
                 self.path.pop(1)
             else:

@@ -3,9 +3,15 @@ import config as conf
 import functions as fce
 from entities import fish_blue_slime,fish_basic
 
+"""
+self.vel_tiles_per_sec = vel
+self.vel_pixels_per_sec = vel * conf.TILE_SIZE
 
-##
+move = (target_pos - self.pos).normalize() * self.vel_pixels_per_sec * dt
+self.pos += move
+"""
 
+"""
 water_index = 0
 
 background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
@@ -22,7 +28,7 @@ progress_heihgt = min_y-max_y
 #zeleny obdelnik
 paddle_speed = conf.TILE_SIZE/40
 paddle_speed_cur = 0
-paddle_speed_max = 10
+paddle_speed_max = 10 #2*tilesize
 
 paddle_width = conf.TILE_SIZE/2
 paddle_height = conf.TILE_SIZE*2
@@ -36,15 +42,46 @@ fish_speed_max = 7
 fish_width = conf.TILE_SIZE/2
 fish_height = conf.TILE_SIZE/2
 fish_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - fish_height)
+"""
+water_index = 0
+
+background_ = pygame.Rect(conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
+background = pygame.Rect (conf.TILE_SIZE*11+conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*4-conf.TILE_SIZE/2,conf.TILE_SIZE*9)
+
+min_y = conf.TILE_SIZE*12
+max_y = conf.TILE_SIZE*4
+
+#bar
+progress_bar = 20
+progress_width = conf.TILE_SIZE/2
+progress_heihgt = min_y-max_y
+
+#zeleny obdelnik
+paddle_speed = conf.TILE_SIZE/40
+paddle_speed_cur = 0
+paddle_speed_max = conf.TILE_SIZE/10 #10
+
+paddle_width = conf.TILE_SIZE/2
+paddle_height = conf.TILE_SIZE*2
+paddle_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - paddle_height)
+
+#rybicka
+fish_speed = conf.TILE_SIZE/40
+fish_speed_cur = 0
+fish_speed_max = conf.TILE_SIZE/15 #7
+
+fish_width = conf.TILE_SIZE/2
+fish_height = conf.TILE_SIZE/2
+fish_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - fish_height)
 
 def reset(difficulty, height):
     global paddle_speed,paddle_speed_cur,paddle_speed_max,paddle_height,paddle_pos,progress_bar
     progress_bar = 20
 
     #zeleny obdelnik
-    paddle_speed = 1
+    paddle_speed = 1 * conf.TILE_SIZE/50
     paddle_speed_cur = 0
-    paddle_speed_max = 5
+    paddle_speed_max = 5 * conf.TILE_SIZE/50 #5
 
     paddle_height = height
     paddle_pos = pygame.Vector2(conf.TILE_SIZE*14,conf.TILE_SIZE*12 - paddle_height)
@@ -56,17 +93,17 @@ def reset(difficulty, height):
 
     match difficulty:
         case "easy":
-            fish_speed = 0.2
-            fish_speed_max = 3
+            fish_speed = 0.2 * conf.TILE_SIZE/50
+            fish_speed_max = 3  * conf.TILE_SIZE/50#3
         case "medium":
-            fish_speed = 0.5
-            fish_speed_max = 4
+            fish_speed = 0.5 * conf.TILE_SIZE/50
+            fish_speed_max = 4  * conf.TILE_SIZE/50#4
         case "hard":
-            fish_speed = 1
-            fish_speed_max = 5
+            fish_speed = 1 * conf.TILE_SIZE/50
+            fish_speed_max = 5  * conf.TILE_SIZE/50#5
         case "nightmare":
-            fish_speed = 1.2
-            fish_speed_max = 6
+            fish_speed = 1.2 * conf.TILE_SIZE/50
+            fish_speed_max = 6  * conf.TILE_SIZE/50#6
 
 def draw(display):
     fce.draw_transparent_rect(display,(145,255,255),background_,128,10)

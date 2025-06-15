@@ -1,4 +1,5 @@
 import pygame
+import config as conf
 
 class Item:
     def __init__(self, x,y, map):
@@ -23,8 +24,8 @@ class Item:
     def to_dict(self):
         return {
             'name': self.name,
-            'pos_x': self.pos.x,
-            'pos_y': self.pos.y,
+            'pos_x': self.pos.x/conf.TILE_SIZE,
+            'pos_y': self.pos.y/conf.TILE_SIZE,
             'map_x': self.map.x,
             'map_y': self.map.y
         }
