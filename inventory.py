@@ -7,9 +7,9 @@ inv_cursor = pygame.Rect(conf.TILE_SIZE*33,conf.TILE_SIZE*(conf.inv_pos+0),conf.
 #inv_background = pygame.Rect(conf.TILE_SIZE*0,conf.TILE_SIZE*19,conf.TILE_SIZE*19,conf.TILE_SIZE*1)
 #inv_cursor = pygame.Rect(conf.TILE_SIZE*(conf.inv_pos+0),conf.TILE_SIZE*19,conf.TILE_SIZE*1,conf.TILE_SIZE*1)
 
-def manager(event):
+def manager(event,player):
     """Pohyb kurzoru inventare."""
-    if conf.inv_pos-event.y >= 0 and conf.inv_pos-event.y <= 18: #kurzor invu nemuze jit pryc z obrazovky
+    if conf.inv_pos-event.y >= 0 and conf.inv_pos-event.y <= 18 and player.mode == 0: #kurzor invu nemuze jit pryc z obrazovky
         conf.inv_pos-= event.y #nastaveni pozice v inventari
         inv_cursor.y-= event.y*conf.TILE_SIZE #realna pozice kurzoru v invu #inv_cursor.x-=
 

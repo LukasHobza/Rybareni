@@ -29,7 +29,7 @@ def main():
     def call_mouse_event_functions(event):
         """Vola fce ktere pracuji s mysi."""
         if conf.gamemode == conf.GAMEMODE_GAME:
-            inv.manager(event)
+            inv.manager(event,player)
         if conf.gamemode == conf.GAMEMODE_SHOP:
             shop.manager(event)
         if conf.gamemode == conf.GAMEMODE_MENU:
