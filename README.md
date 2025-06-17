@@ -1,5 +1,6 @@
 Spuštění projektu: dvojklik na "dist/main.exe"
 
+Vypnutí hry - ALT+F4/DEL
 Pohyb - WASD
 Použití/koupení itemu - E/F
 Dropnutí itemu - Q
